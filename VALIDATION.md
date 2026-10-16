@@ -1,0 +1,11 @@
+# Validation — VSO 1.0.0
+
+This release renames the independent manager module to VSO and replaces its module license. The previous VicoSafeOptimizer package and approval do not authorize these new bytes. The GitHub release records the final package SHA-256, campaign results and publication state; package documentation cannot contain its own digest without creating a circular hash.
+
+The unchanged application manager completed earlier isolated Windows 11 campaigns: the final six-combination Desktop/Core × source/distribution/extracted-package matrix had 934 passing cases, zero failures and two intentional skips of the built-inventory check on source. Real six-version official VSO7 lifecycle campaigns recorded 36 passing observations; real fault campaigns recorded ten. These counts describe repeated cases, not independent scenarios, and do not replace renamed-package validation.
+
+The renamed candidate requires fresh parser/BOM/manifest/MAML/privacy checks, the same six matrix combinations, local package installation and command discovery under both PowerShell editions, and verification of affected bootstrap and registration contracts. Build, Validate, Approve and Publish remain separate. Approval binds the exact package, reviewed inputs and evidence. A passing mock or plan does not prove Windows mutation succeeded.
+
+The earlier authentic Spanish Windows UI session remains **unverified and explicitly non-blocking by owner decision**. Explicit Spanish messages/help and Spanish MAML have separate tests; they do not establish an authentic Spanish Windows UI session. Earlier failures, including harness issues and the reproduced CIM exit race, remain preserved privately with their original evidence and package. They have not been relabeled as successes.
+
+Host verification is static only. Runtime import, installation, removal, launch, process termination and UAC tests belong in the dedicated disposable VM. No Windows tweaks are authorized by this campaign. Windows 10, Windows Server, ARM64 and VSO8 are not certified. Schema 2 uses synthetic distributions because inspected official releases use the historical layout. Recovery tests cover controlled interruption boundaries, not every power-loss timing. Configuration-state checks do not prove performance benefit.

@@ -1,0 +1,72 @@
+VSO PowerShell Module Source-Available License 1.0
+
+Copyright (c) 2026 saturnus25. All rights reserved except as granted below.
+
+1. Scope and definitions
+
+"Software" means the VSO PowerShell Module source code, documentation and
+packages distributed with this license. "Licensor" means saturnus25. This
+license does not cover the separate Vico Safe Optimizer application or any
+third-party component governed by its own license. Those licenses continue
+to apply to their respective works.
+
+2. Free permitted use
+
+Subject to these terms, Licensor grants you a worldwide, royalty-free,
+non-exclusive license to view, download and study the Software, install and
+run unmodified copies for personal or professional purposes, and make the
+technical, installation and backup copies necessary for those activities.
+You may share exact, unmodified copies, provided that the complete license,
+copyright notices, attribution and original project identity are preserved.
+You must not represent such copies as your own product or endorsement by
+Licensor. No payment to Licensor is required for these permitted activities.
+
+3. Restrictions
+
+Except for section 4 or separate written permission from Licensor, this
+license does not grant permission to modify, adapt, translate or create
+derivative works of the Software; distribute modified versions; build or
+distribute derivative projects based on its code; rebrand or present the
+Software as your own product; remove or alter its attribution, copyright,
+license or provenance notices; or sublicense it under different terms.
+Studying the code does not grant a general right to reuse that code in
+another project. The license grants no trademark or endorsement rights.
+
+4. Platform, technical and mandatory exceptions
+
+Sections 2 and 3 do not restrict rights that applicable law makes
+non-excludable, or permissions independently granted by Licensor under the
+terms of the hosting and distribution platforms. In particular, the rights
+granted under GitHub's Terms of Service to view, copy and fork a public
+repository through GitHub's functionality remain effective. Platform
+operators may host, reproduce, archive, process and distribute the Software
+as authorized by their applicable platform terms. PowerShell Gallery users
+may obtain, save, reproduce and share exact, attributed, unmodified copies
+as provided above and by the Gallery's terms. This license does not amend
+or override a platform's terms, or grant additional rights to modified
+derivative distributions outside independently applicable permissions.
+Technical transformations required for installation, execution, transport
+or backup, which do not change the Software's functional source content,
+are permitted. You retain any rights separately granted to you under an
+earlier applicable license; this license does not retroactively revoke them.
+
+5. Compliance and termination
+
+Keep this license with every permitted copy. Rights under this license
+terminate upon a material breach. Rights independently provided by law,
+third-party licenses or platform terms are unaffected. Contact Licensor
+through the official project for permissions beyond this license.
+
+6. Disclaimer and limitation of liability
+
+TO THE EXTENT PERMITTED BY APPLICABLE LAW, THE SOFTWARE IS PROVIDED "AS IS",
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE AND
+NON-INFRINGEMENT. TO THE EXTENT PERMITTED BY APPLICABLE LAW, LICENSOR IS
+NOT LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY ARISING FROM THE
+SOFTWARE OR ITS USE, WHETHER IN CONTRACT, TORT OR OTHERWISE. NOTHING IN
+THIS LICENSE EXCLUDES LIABILITY OR CONSUMER RIGHTS THAT CANNOT LAWFULLY
+BE EXCLUDED.
+
+This is a source-available license. It is not an OSI-approved open-source
+license and does not grant general modification or derivative-work rights.

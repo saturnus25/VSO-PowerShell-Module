@@ -1,0 +1,12 @@
+dist/
+.work/
+TestResults/
+*.user
+*.log
+*.clixml
+*.nupkg
+
+validation/
+PUBLICATION-*.md
+RELEASE-READY-*.json
+*.zip
