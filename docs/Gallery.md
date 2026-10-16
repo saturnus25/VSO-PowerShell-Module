@@ -22,16 +22,14 @@ Gallery availability and exact package acceptance are recorded in the GitHub rel
 
 ## Commands
 
-| Command | Purpose |
-|---|---|
-| `Install-VSO` | Download, verify and install an official application release |
-| `Start-VSO` | Start its official launcher |
-| `Stop-VSO` | Inspect running VSO; termination requires explicit `-Force` |
-| `Update-VSO` | Update with integrity checks and previous-copy retention |
-| `Get-VSOStatus` | Read installation, integrity and process status |
-| `Get-VSOInstallation` | Discover registered installations |
-| `Reset-VSO` | Remove attributable application files |
-| `Help-VSO` | Show localized command help |
+- `Install-VSO`: Download, verify and install an official application release
+- `Start-VSO`: Start its official launcher
+- `Stop-VSO`: Inspect running VSO; termination requires explicit `-Force`
+- `Update-VSO`: Update with integrity checks and previous-copy retention
+- `Get-VSOStatus`: Read installation, integrity and process status
+- `Get-VSOInstallation`: Discover registered installations
+- `Reset-VSO`: Remove attributable application files
+- `Help-VSO`: Show localized command help
 
 ```powershell
 Install-VSO -Path "D:\VSO"
