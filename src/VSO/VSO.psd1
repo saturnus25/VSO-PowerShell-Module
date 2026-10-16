@@ -5,7 +5,7 @@
     Author = 'saturnus25'
     CompanyName = 'saturnus25'
     Copyright = 'Copyright (c) 2026 saturnus25'
-    Description = 'Official installation and lifecycle manager for Vico Safe Optimizer. Windows 11 x64; no tweaks are applied by this module.'
+    Description = 'Official installation and lifecycle manager for Vico Safe Optimizer. Windows 11 x64.'
     PowerShellVersion = '5.1'
     CompatiblePSEditions = @('Desktop', 'Core')
     FunctionsToExport = @('Install-VSO','Start-VSO','Stop-VSO','Update-VSO','Get-VSOStatus','Get-VSOInstallation','Reset-VSO','Help-VSO')
