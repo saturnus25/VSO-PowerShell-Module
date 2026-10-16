@@ -7,8 +7,8 @@ Official installation and lifecycle manager for [Vico Safe Optimizer](https://gi
 PowerShell with PSResourceGet:
 
 ```powershell
-install-psresource vso
-install-vso
+Install-PSResource VSO
+Install-VSO
 ```
 
 The first command installs the module. The second opens the native VSO installation wizard. Windows PowerShell 5.1 with PowerShellGet:
