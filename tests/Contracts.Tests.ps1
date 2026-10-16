@@ -5,10 +5,10 @@ Describe 'Public module contract' {
     }
     It 'has a valid independent manifest and public attribution' {
         $m=Test-ModuleManifest $env:VSO_MODULE_LAB_MANIFEST
-        $m.Version.ToString()|Should -Be '1.0.0'
+        $m.Version.ToString()|Should -Be '1.0.1'
         $m.Name|Should -BeExactly 'VSO'
         $m.RootModule|Should -BeExactly 'VSO.psm1'
-        $m.PrivateData.PSData.LicenseUri|Should -BeExactly 'https://github.com/saturnus25/VSO-PowerShell-Module/blob/v1.0.0/LICENSE'
+        $m.PrivateData.PSData.LicenseUri|Should -BeExactly 'https://github.com/saturnus25/VSO-PowerShell-Module/blob/v1.0.1/LICENSE'
         $m.Author|Should -BeExactly 'saturnus25'
         $m.CompanyName|Should -BeExactly 'saturnus25'
         $m.PowerShellVersion.ToString()|Should -Be '5.1'

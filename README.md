@@ -1,6 +1,6 @@
 # VSO PowerShell Module
 
-Official installation and lifecycle manager for [Vico Safe Optimizer](https://github.com/saturnus25/VSO), maintained by **saturnus25**. The PowerShell module is named **VSO**; module version **1.0.0** is independent of the application's version. It downloads official release assets instead of bundling the optimizer.
+Official installation and lifecycle manager for [Vico Safe Optimizer](https://github.com/saturnus25/VSO), maintained by **saturnus25**. The PowerShell module is named **VSO**; module version **1.0.1** is independent of the application's version. It downloads official release assets instead of bundling the optimizer.
 
 ## Installation
 

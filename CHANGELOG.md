@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.1
+
+- Shortened the package description and used canonical PowerShell capitalization in the packaged installation examples.
+- Updated release metadata and the User-Agent version; application management behavior is unchanged.
+- Retained the published 1.0.0 artifact and its evidence. Gallery requires a new package version to update package metadata.
+
 ## 1.0.0
 
 - Public module and Gallery package name: VSO. The eight public commands remain unchanged; module-qualified calls, pinned UAC bootstrap, native help and package tooling use the new name.

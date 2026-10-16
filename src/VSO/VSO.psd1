@@ -1,6 +1,6 @@
 ﻿@{
     RootModule = 'VSO.psm1'
-    ModuleVersion = '1.0.0'
+    ModuleVersion = '1.0.1'
     GUID = '97ce321c-99d7-4797-b4a8-c7dc982537fc'
     Author = 'saturnus25'
     CompanyName = 'saturnus25'
@@ -15,9 +15,9 @@
     PrivateData = @{
         PSData = @{
             Tags = @('Windows','VSO','Installer','Management')
-            LicenseUri = 'https://github.com/saturnus25/VSO-PowerShell-Module/blob/v1.0.0/LICENSE'
+            LicenseUri = 'https://github.com/saturnus25/VSO-PowerShell-Module/blob/v1.0.1/LICENSE'
             ProjectUri = 'https://github.com/saturnus25/VSO-PowerShell-Module'
-            ReleaseNotes = 'VSO PowerShell Module 1.0.0. Official application lifecycle management with localized help, integrity checks, attributable removal and a separate source-available module license. See the tagged release for acceptance results and limits.'
+            ReleaseNotes = 'Metadata and documentation patch: shorter package description and canonical PowerShell capitalization in installation examples. Runtime behavior is unchanged. See the tagged release for exact-package acceptance.'
             RequireLicenseAcceptance = $false
         }
     }
