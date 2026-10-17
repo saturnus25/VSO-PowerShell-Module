@@ -1,6 +1,6 @@
 # VSO PowerShell Module
 
-Official installation and lifecycle manager for [Vico Safe Optimizer](https://github.com/saturnus25/VSO), maintained by **saturnus25**. The PowerShell module is named **VSO**; module version **1.0.1** is independent of the application's version. It downloads official release assets instead of bundling the optimizer.
+Official installation and lifecycle manager for [Vico Safe Optimizer](https://github.com/saturnus25/VSO), maintained by **saturnus25**. The PowerShell module is named **VSO**; module version **1.0.2** is independent of the application's version. It downloads official release assets instead of bundling the optimizer.
 
 ## Installation
 
@@ -49,6 +49,22 @@ Reset-VSO -WhatIf
 CurrentUser is the default and uses `$env:LOCALAPPDATA\Programs\VSO`. AllUsers uses `$env:ProgramFiles\VSO` and requests UAC when necessary. An explicit `Path` selects a custom managed folder; the official payload remains in its `VSO7` child. Native choices and folder selection are interactive. `-Quiet` suppresses prompts and elevation; unresolved choices or permissions produce errors. English and Spanish messages and help are included; `-Language en` or `-Language es` overrides automatic selection. Mutating commands support `-WhatIf` and `-Confirm`.
 
 `Reset-VSO` preserves unknown or modified data. `-Full` also considers provably owned declared data; backups additionally require `-RemoveBackups -AcknowledgeBackupLoss`. Shared VSO Recovery and untracked files remain protected. Removing the application never restores Windows tweaks, and does not uninstall the PowerShell module. See [usage](docs/Usage.md) and [removal](docs/Removal.md) for details.
+
+`Get-VSOStatus` returns a structured `NotInstalled` query summary when nothing matches. Its default display follows `Language`; raw properties remain stable English tokens, nulls and Booleans. `Get-VSOInstallation` enumerates actual candidates and returns an empty collection when none match. Both accept paths or objects with a `Path` property through the pipeline.
+
+## Uninstallation
+
+The application and the PowerShell module are independent components:
+
+```powershell
+Reset-VSO                 # Remove the application, preserving protected data
+Reset-VSO -Full            # Also consider additional attributable application data
+Uninstall-PSResource VSO   # Remove the module installed with PSResourceGet
+# Or, for a module installed with PowerShellGet:
+Uninstall-Module VSO
+```
+
+Choose the applicable command. `Reset-VSO` keeps the module; uninstalling the module keeps the application. Close sessions importing the module before removing it. Use `Help-VSO`, `Help-VSO -Command Reset-VSO`, or `Get-Help Reset-VSO -Examples` to review syntax and removal limits. Native `Get-Help -Full` places examples after NOTES; numbered example headings distinguish them from the preceding notes.
 
 ## Requirements and compatibility
 

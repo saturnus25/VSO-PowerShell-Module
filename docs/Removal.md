@@ -1,5 +1,9 @@
 # Removal ownership and recovery limits
 
+The application and PowerShell module are independent components. Use `Reset-VSO` to remove the application, or `Reset-VSO -Full` to include additional provably owned application data. Both retain the module. To remove a module installed with PSResourceGet, use `Uninstall-PSResource VSO`; for PowerShellGet, use `Uninstall-Module VSO`. Close sessions importing the module first. Removing the module retains the application and its data.
+
+En español: `Reset-VSO` elimina la aplicación; `Reset-VSO -Full` incluye más datos propios según las reglas siguientes. El módulo se elimina por separado con `Uninstall-PSResource VSO` o `Uninstall-Module VSO`. Eliminar uno de estos componentes no elimina el otro.
+
 Reset removes application files; it never reverses Windows tweaks or invokes VSO Recovery. An exact `Reset-VSO -Path $install -Full -WhatIf -PassThru` plan contains Remove records with hashes/ownership/roles, candidate Directories, backward-compatible Preserve paths and Protected records with Path, Reason, Ownership and Exists. Preview creates no lock, staging directory, metadata or UAC request. Interactive execution displays that plan before confirmation, including with Force. Quiet automation can inspect the structured preview.
 
 | Mode | Eligible data |

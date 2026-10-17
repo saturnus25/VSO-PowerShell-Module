@@ -3,11 +3,11 @@
     [CmdletBinding()]
     param([ValidateSet('Install-VSO','Start-VSO','Stop-VSO','Update-VSO','Get-VSOStatus','Get-VSOInstallation','Reset-VSO','Help-VSO')][string]$Command,[switch]$Examples,[ValidateNotNullOrEmpty()][string]$Language,[switch]$PassThru)
     $context=New-VSOContext $Language
+    if ($Examples -and -not $Command) { Throw-VSOError $context HelpExamplesCommand }
     $help=Import-PowerShellDataFile -LiteralPath (Join-Path $script:ModuleRoot ($context.Language+'/Help.psd1'))
     if (-not $Command) {
-        if (-not $PassThru) { Write-Information $context.Text.HelpIntro -InformationAction Continue }
-        foreach ($name in $script:PublicCommands) { [pscustomobject]@{ Command=$name; Description=$help[$name].Synopsis } }
-        if (-not $PassThru) { Write-Information $context.Text.HelpHint -InformationAction Continue }
+        if (-not $PassThru) { Write-Information ($context.Text.HelpIntro+[Environment]::NewLine+$context.Text.HelpHint+[Environment]::NewLine+[Environment]::NewLine+$context.Text.RemovalHint) -InformationAction Continue }
+        foreach ($name in $script:PublicCommands) { [pscustomobject]@{ PSTypeName='VSO.CommandHelp'; Command=$name; Description=$help[$name].Synopsis } }
         return
     }
     $item=$help[$Command]
@@ -21,7 +21,7 @@
     $lines.Add($Command); $lines.Add($item.Synopsis); $lines.Add('')
     if (-not $Examples) {
         $lines.Add($item.Description); $lines.Add(''); $lines.Add($context.Text.SyntaxLabel)
-        foreach ($syntax in $result.Syntax) { $lines.Add('    '+$syntax) }
+        foreach ($syntax in $result.Syntax) { $lines.Add('    '+$Command+' '+$syntax) }
         $lines.Add(''); $lines.Add($context.Text.ParametersLabel)
         foreach ($name in $parameters.Keys) {
             $lines.Add('    -'+$name); $lines.Add('        '+$parameters[$name])
@@ -29,7 +29,8 @@
         }
     }
     $lines.Add(''); $lines.Add($context.Text.ExamplesLabel)
-    foreach ($example in $item.Examples) { $lines.Add('    '+$example.Title); $lines.Add('        '+$example.Code); $lines.Add('        '+$example.Remarks); $lines.Add('') }
+    $exampleNumber=0
+    foreach ($example in $item.Examples) { $exampleNumber++; $lines.Add('    '+($context.Text.ExampleTitle -f $exampleNumber,$example.Title)); $lines.Add('        '+$example.Code); $lines.Add('        '+$example.Remarks); $lines.Add('') }
     $lines.Add($context.Text.PermissionsLabel+' '+$result.Permissions)
     $lines.Add($context.Text.CompatibilityLabel+' '+$result.Compatibility)
     $lines.Add($context.Text.SafetyLabel+' '+$result.Safety)

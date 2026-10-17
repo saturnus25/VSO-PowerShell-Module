@@ -2,7 +2,7 @@
 param([string]$PackagePath,[string]$ValidationPath,[string]$ApprovalPath,[Security.SecureString]$ApiKey,[switch]$Publish)
 $ErrorActionPreference='Stop'
 $project=[IO.Path]::GetFullPath((Split-Path -Parent $PSScriptRoot))
-if (-not $PackagePath) {$PackagePath=Join-Path $project 'dist/VSO.1.0.1.nupkg'}
+if (-not $PackagePath) {$PackagePath=Join-Path $project 'dist/VSO.1.0.2.nupkg'}
 if (-not $ValidationPath) {$ValidationPath=Join-Path $project '.work/validated-package.json'}
 if (-not $ApprovalPath) {$ApprovalPath=Join-Path $project '.work/approved-package.json'}
 . (Join-Path $PSScriptRoot 'PackageContract.ps1')
@@ -15,7 +15,7 @@ try {
     if ($approval.Schema -ne 1 -or $approval.Product -cne 'VSO' -or $approval.LabAcceptanceComplete -ne $true -or $approval.Sha256 -cne $validated.Sha256 -or $approval.ValidationSha256 -cne (Get-FileHash -LiteralPath $ValidationPath -Algorithm SHA256).Hash.ToLowerInvariant()) {throw 'Approval invalidated. Validate and approve the exact package again.'}
     $null=Test-ReleasePackage $PackagePath (Join-Path $project 'dist/VSO')
     if (-not $Publish) { [pscustomobject]@{Publish=$false;Sha256=$validated.Sha256;ApprovalVerified=$true};return }
-    if (-not $PSCmdlet.ShouldProcess(('PSGallery / VSO 1.0.1 / SHA256 '+$validated.Sha256),'Publish approved package bytes')) {return}
+    if (-not $PSCmdlet.ShouldProcess(('PSGallery / VSO 1.0.2 / SHA256 '+$validated.Sha256),'Publish approved package bytes')) {return}
     $publisher=Get-Command Publish-PSResource -ErrorAction Stop
     if (-not $publisher.Parameters.ContainsKey('NupkgPath')) {throw 'PSResourceGet with NupkgPath support is required.'}
     if (-not $ApiKey) {$ApiKey=Read-Host -Prompt 'PowerShell Gallery API key' -AsSecureString}

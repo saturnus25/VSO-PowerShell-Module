@@ -20,4 +20,9 @@
     AlreadyRunning='Ya hay una instancia de VSO atribuida a esta instalación.'
     ProcessVisibility='Faltan líneas de comandos o identidades de procesos, o un host de VSO utiliza un wrapper no reconocido.'
     HelpIntro='Gestor de instalación y mantenimiento. No aplica ni restaura tweaks de Windows.'; HelpHint='Usa Help-VSO -Command Install-VSO o Get-Help Install-VSO -Full.'; Permissions='CurrentUser necesita acceso a su carpeta. AllUsers requiere permisos administrativos. Start usa el lanzador oficial y su propia elevación.'; Compatibility='Destinado a Windows 11 x64, Windows PowerShell 5.1 y PowerShell 7.x. La publicación requiere aceptación real en ambas ediciones.'
+    NotInstalled='No instalado'; NoInstallation='VSO no está instalado en las ubicaciones registradas o predeterminadas.'; NoMatchingInstallation='Ninguna instalación de VSO coincide con esta consulta.'; InstallHint='Ejecuta Install-VSO para instalarlo.'
+    StatusTitle='Estado de instalación de VSO'; StatusLabel='Estado'; VersionLabel='Versión'; PathLabel='Ruta'; RunningLabel='En ejecución'; ProcessLabel='Procesos'; NotAvailable='N/D'; Yes='Sí'; No='No'
+    HelpExamplesCommand='Especifica -Command al usar -Examples. Por ejemplo: Help-VSO -Command Install-VSO -Examples.'
+    ExampleTitle='---------------- EJEMPLO {0}: {1} ----------------'
+    RemovalHint='Aplicación: Reset-VSO (o Reset-VSO -Full para eliminar más archivos propios). Módulo: Uninstall-PSResource VSO, o Uninstall-Module VSO si usaste PowerShellGet. Reset-VSO conserva el módulo; desinstalar el módulo conserva la aplicación.'
 }

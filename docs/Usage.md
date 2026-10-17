@@ -42,6 +42,38 @@ The managed installation root is limited to 160 characters, reserving space for 
 
 An existing managed installation requires `Update-VSO` or `Install-VSO -Force`. A manual installation can be adopted with Force only if its application files exactly match the independently verified requested release. Other files are retained. Modified managed code is never overwritten via Force; use a fresh destination and review the damaged copy separately.
 
+## Status and empty discovery
+
+```powershell
+Get-VSOStatus -Language es
+Get-VSOStatus -Language en -Quiet | Select-Object InstallationState, Version, Path, Running
+Get-VSOStatus -Quiet | Where-Object Kind -EQ Installation | ConvertTo-Json
+Get-VSOInstallation -Quiet | Get-VSOStatus -Quiet
+'D:\Programs\VSO' | Get-VSOStatus -Quiet
+```
+
+A direct Get-VSOStatus query with no matching installations returns exactly one VSO.Status query summary: Kind Summary, InstallationState NotInstalled, null Id/Version/Path/Generation/Scope, Running false and an empty ProcessIds array. This is not a VSO.Installation record. A filtered absence is limited to that Scope/Version query; it does not claim that no other copy exists. RequestedPath/RequestedScope/RequestedVersion describe the query. Discovery is bounded to registered and default locations and never searches GitHub for local absence.
+
+The native display uses English or Spanish labels and N/A or N/D for missing values. Raw property names and state tokens are English; missing raw data remains null and Running is Boolean or null when visibility is unknown. DisplayText is presentation only. Use Select-Object for a compact machine schema or Format-List * for all diagnostics. Quiet suppresses questions and progress, while query objects still flow through the pipeline.
+
+Get-VSOInstallation returns an empty collection when nothing matches, without informational noise in either interactive or script use. Use Get-VSOStatus when an explicit human-readable absence is desired. An explicit nonexistent Path returns an installation candidate with State Missing; registered missing directories remain Missing, corrupt or incomplete folders report Modified with diagnostics, and a valid manually discovered distribution reports Unregistered. Access failures in registration enumeration remain errors. Get-VSOStatus preserves these installation states and distinguishes Running, Idle and Unknown process visibility. Both query commands accept pipeline strings or objects with a Path property. Each pipeline input is a separate query; an empty upstream collection produces no query records.
+
+Example without matching installations, Spanish:
+
+```text
+Estado de instalación de VSO
+
+Estado       : No instalado
+Versión      : N/D
+Ruta         : N/D
+En ejecución : No
+
+VSO no está instalado en las ubicaciones registradas o predeterminadas.
+Ejecuta Install-VSO para instalarlo.
+```
+
+English display uses VSO Installation Status, Not Installed, N/A and False; the raw InstallationState is NotInstalled in both languages.
+
 ## Discovery, launch and process handling
 
 ```powershell
@@ -82,7 +114,9 @@ Reset-VSO -Full -RemoveBackups -AcknowledgeBackupLoss -Confirm
 
 Review the exact Remove, Preserve and Protected lists before approving. Protected gives a reason and ownership classification for each preserved object. Normal reset deletes unchanged owned application files and matching registration/receipt, preserving declared persistent data. Full additionally deletes unchanged configuration, cache, logs and temporary data from a verified distribution inventory, and attributable committed transaction metadata. Modified, unknown and foreign files survive. It never recursively deletes the installation folder. Non-interactive destructive removal requires Force; backup removal additionally requires Full and AcknowledgeBackupLoss. Explicit Confirm remains honored.
 
-VSO7's current contract cannot attribute shared `%ProgramData%\VicoreDevelopment\VSO7` Recovery, secrets, configuration, downloaded utilities or fallback reports to one installation. It also supplies no per-file ownership ledger for newly created local runtime data. Consequently **Full preserves those data**, including local files without provenance. This is a deliberate safety limitation, not a claim to remove every trace. `RemoveBackups` can delete unchanged application files from attributable previous manager copies, while retaining unknown backup contents and the journals/receipts needed to explain them. No backups of Windows state are deleted. The module creates no shortcuts, scheduled tasks or persistent downloader cache to clean up. The Gallery module itself is retained; after application removal, the owner can use `Uninstall-PSResource VSO` or `Uninstall-Module VSO` in a separate session.
+VSO7's current contract cannot attribute shared `%ProgramData%\VicoreDevelopment\VSO7` Recovery, secrets, configuration, downloaded utilities or fallback reports to one installation. It also supplies no per-file ownership ledger for newly created local runtime data. Consequently **Full preserves those data**, including local files without provenance. This is a deliberate safety limitation, not a claim to remove every trace. `RemoveBackups` can delete unchanged application files from attributable previous manager copies, while retaining unknown backup contents and the journals/receipts needed to explain them. No backups of Windows state are deleted. The module creates no shortcuts, scheduled tasks or persistent downloader cache to clean up. The Gallery module itself is retained. The two components are independent: Reset-VSO removes the application, Reset-VSO -Full considers additional attributable application data, and neither removes the module. Uninstall-PSResource VSO removes the module installed with PSResourceGet; Uninstall-Module VSO removes a module installed with PowerShellGet. Neither removes the application. Close sessions importing the module before removing it.
+
+En español: usa Reset-VSO para eliminar la aplicación, o Reset-VSO -Full para incluir más datos propios. Desinstala el módulo por separado con Uninstall-PSResource VSO o Uninstall-Module VSO. Eliminar un componente conserva el otro.
 
 ## Localization and progress
 
@@ -93,7 +127,9 @@ Get-Help Install-VSO -Full
 Get-Help Reset-VSO -Examples
 ```
 
-Spanish UI cultures use es-ES; other cultures explicitly fall back to en-US. Every applicable command accepts Language. Structured machine states and property names remain stable English tokens, with localized display values. Help-VSO renders readable syntax, parameter/default descriptions and examples; PassThru returns its structured metadata for scripts. Native Get-Help uses generated external MAML for en-US/es-ES plus an English root fallback. Language overrides Help-VSO only; Get-Help follows PowerShell's own session culture. English native rendering and explicit Spanish Help-VSO ran in both editions; automatic Spanish session culture remains a separate acceptance limit.
+Spanish UI cultures use es-ES; other cultures explicitly fall back to en-US. Every applicable command accepts Language. Structured machine states and property names remain stable English tokens, with localized display values. Help-VSO renders readable syntax, parameter/default descriptions and examples; PassThru returns its structured metadata for scripts. Native Get-Help uses generated external MAML for en-US/es-ES plus an English root fallback. Language overrides Help-VSO only; Get-Help follows PowerShell's own session culture. Get-Help -Examples selects real command:examples/command:example MAML nodes. Get-Help -Full normally displays those examples after NOTES without a separate general examples heading; numbered EXAMPLE/EJEMPLO titles distinguish them. Notes contain safety, compatibility, permissions and removal guidance, not embedded examples. Help-VSO -Examples requires -Command. Native syntax includes positional parameters, supported pipeline binding and WhatIf/Confirm. These behaviors have dedicated regressions; actual campaign results and remaining OS language limits are recorded separately.
 
 Native Write-Progress reports streamed download bytes, extracted bytes and checked/removed file counts. Unknown-length activities are indeterminate. Progress respects ProgressPreference, is suppressed by Quiet and is completed in finally blocks.
 
+
+The native help layout follows PowerShell's formatter; the MAML schema separates alertSet and command:examples. Reference: [Microsoft PowerShell help schema example](https://devblogs.microsoft.com/powershell/draft-creating-cmdlet-help/).

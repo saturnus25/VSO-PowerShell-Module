@@ -25,7 +25,7 @@ function Invoke-VSOHttp {
     $handler.SslProtocols=[Security.Authentication.SslProtocols]::Tls12
     $client=[Net.Http.HttpClient]::new($handler); $client.Timeout=[TimeSpan]::FromMinutes(10)
     $cancellation=[Threading.CancellationTokenSource]::new([TimeSpan]::FromMinutes(10))
-    $client.DefaultRequestHeaders.UserAgent.ParseAdd('VSO/1.0.1')
+    $client.DefaultRequestHeaders.UserAgent.ParseAdd('VSO/1.0.2')
     $client.DefaultRequestHeaders.Accept.ParseAdd('application/vnd.github+json')
     $response=$null; $stream=$null; $output=$null
     try {

@@ -1,6 +1,6 @@
 ﻿@{
     RootModule = 'VSO.psm1'
-    ModuleVersion = '1.0.1'
+    ModuleVersion = '1.0.2'
     GUID = '97ce321c-99d7-4797-b4a8-c7dc982537fc'
     Author = 'saturnus25'
     CompanyName = 'saturnus25'
@@ -12,12 +12,13 @@
     CmdletsToExport = @()
     VariablesToExport = @()
     AliasesToExport = @()
+    FormatsToProcess = @('VSO.format.ps1xml')
     PrivateData = @{
         PSData = @{
             Tags = @('Windows','VSO','Installer','Management')
-            LicenseUri = 'https://github.com/saturnus25/VSO-PowerShell-Module/blob/v1.0.1/LICENSE'
+            LicenseUri = 'https://github.com/saturnus25/VSO-PowerShell-Module/blob/v1.0.2/LICENSE'
             ProjectUri = 'https://github.com/saturnus25/VSO-PowerShell-Module'
-            ReleaseNotes = 'Metadata and documentation patch: shorter package description and canonical PowerShell capitalization in installation examples. Runtime behavior is unchanged. See the tagged release for exact-package acceptance.'
+            ReleaseNotes = 'Structured NotInstalled status with localized native formatting, pipeline discovery, clearer numbered native help examples, complete parameter metadata and separate application/module removal guidance. See validation for exact-package acceptance.'
             RequireLicenseAcceptance = $false
         }
     }

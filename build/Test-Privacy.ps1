@@ -4,7 +4,7 @@ $ErrorActionPreference='Stop'
 if (-not $Path) { $Path=Split-Path -Parent $PSScriptRoot }
 $root=[IO.Path]::GetFullPath($Path)
 $findings=[Collections.Generic.List[string]]::new()
-$textExtensions=@('.ps1','.psm1','.psd1','.md','.txt','.json','.xml','.nuspec','.rels','.psmdcp','.yml','.yaml','.gitignore')
+$textExtensions=@('.ps1','.psm1','.psd1','.md','.txt','.json','.xml','.ps1xml','.nuspec','.rels','.psmdcp','.yml','.yaml','.gitignore')
 function Test-PublicText([string]$Name,[string]$Text) {
     $patterns=@(
         '(?i)[a-z]:[\\/]+Users[\\/]+(?!<USER>|<USUARIO>|Public(?:[\\/]|$)|Default(?:[\\/]|$))[^\\/\s<>"'']+',

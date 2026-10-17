@@ -11,7 +11,7 @@ function Test-ReleasePackage {
     param([string]$PackagePath,[string]$ModulePath)
     Add-Type -AssemblyName System.IO.Compression.FileSystem
     $data=Import-PowerShellDataFile -LiteralPath (Join-Path $ModulePath 'VSO.psd1')
-    if ($data.ModuleVersion -ne '1.0.1' -or $data.Author -cne 'saturnus25' -or $data.CompanyName -cne 'saturnus25' -or $data.RequiredModules) {throw 'Unexpected manifest identity or dependencies.'}
+    if ($data.ModuleVersion -ne '1.0.2' -or $data.Author -cne 'saturnus25' -or $data.CompanyName -cne 'saturnus25' -or $data.RequiredModules) {throw 'Unexpected manifest identity or dependencies.'}
     $expected=[Collections.Generic.Dictionary[string,string]]::new([StringComparer]::Ordinal)
     foreach ($file in @(Get-ChildItem -LiteralPath $ModulePath -Recurse -File)) {
         if ($file.Attributes-band[IO.FileAttributes]::ReparsePoint) {throw 'Linked package input rejected.'}
@@ -34,7 +34,7 @@ function Test-ReleasePackage {
         foreach ($name in @($expected.Keys)+$metadata) {if (-not $seen.Contains($name)) {throw 'Missing package entry.'}}
         $reader=[IO.StreamReader]::new($zip.GetEntry('VSO.nuspec').Open())
         try {$nuspec=[xml]$reader.ReadToEnd()}finally{$reader.Dispose()}
-        foreach ($pair in @(@('id','VSO'),@('version','1.0.1'),@('authors','saturnus25'))) {
+        foreach ($pair in @(@('id','VSO'),@('version','1.0.2'),@('authors','saturnus25'))) {
             $node=$nuspec.SelectSingleNode('//*[local-name()="metadata"]/*[local-name()="'+$pair[0]+'"]')
             if (-not $node -or $node.InnerText -cne $pair[1]) {throw 'Unexpected nuspec identity.'}
         }

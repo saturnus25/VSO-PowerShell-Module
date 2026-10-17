@@ -37,7 +37,7 @@ Describe 'Exact package preparation without keys or publication' {
         # Test-local stand-in also works on Desktop without PSResourceGet installed.
         function Publish-PSResource {param($NupkgPath,$Repository,$ApiKey,[switch]$Confirm) throw 'Actual publication forbidden in tests'}
         . (Join-Path $script:build 'PackageContract.ps1')
-        $script:originalPackage=Join-Path $script:project 'dist/VSO.1.0.1.nupkg'
+        $script:originalPackage=Join-Path $script:project 'dist/VSO.1.0.2.nupkg'
         $script:validation=Join-Path $TestDrive 'validated.json';$script:approval=Join-Path $TestDrive 'approved.json'
         $proof=@(foreach ($edition in @('Desktop','Core')) {foreach ($kind in @('src','dist','package')) {
             $p=Join-Path $TestDrive ($edition+'-'+$kind+'-synthetic.xml')

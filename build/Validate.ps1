@@ -2,7 +2,7 @@
 param([string]$PackagePath,[string]$RecordPath,[string[]]$EvidencePath)
 $ErrorActionPreference='Stop'
 $project=[IO.Path]::GetFullPath((Split-Path -Parent $PSScriptRoot))
-if (-not $PackagePath) {$PackagePath=Join-Path $project 'dist/VSO.1.0.1.nupkg'}
+if (-not $PackagePath) {$PackagePath=Join-Path $project 'dist/VSO.1.0.2.nupkg'}
 if (-not $RecordPath) {$RecordPath=Join-Path $project '.work/validated-package.json'}
 . (Join-Path $PSScriptRoot 'PackageContract.ps1')
 $handle=[IO.FileStream]::new($PackagePath,[IO.FileMode]::Open,[IO.FileAccess]::Read,[IO.FileShare]::Read)

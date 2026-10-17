@@ -1,1360 +1,1533 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<helpItems schema="maml">
-  <command:command xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10">
+<helpItems schema="maml" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+  <command:command>
     <command:details>
       <command:name>Install-VSO</command:name>
       <command:verb>Install</command:verb>
       <command:noun>VSO</command:noun>
-      <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+      <maml:description>
         <maml:para>Download, validate and install the official VSO distribution.</maml:para>
       </maml:description>
     </command:details>
-    <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+    <maml:description>
       <maml:para>Interactive scope and folder selection use native choices. An explicit Scope or AllUsers skips only scope selection; an interactive invocation still asks for the destination. Path alone selects CurrentUser without questions. CurrentUser uses LOCALAPPDATA; AllUsers uses ProgramFiles. GitHub release assets, archive SHA-256, extraction limits and every internal file checksum are validated before promotion. Unknown files are preserved and an existing installation requires Update or Force. Quiet never elevates. WhatIf creates no files and makes no network request.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Install-VSO</maml:name>
-        <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Path</maml:name>
-          <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+        <maml:name>Install-VSO</maml:name>
+        <command:parameter required="false" position="0" pipelineInput="false" globbing="false">
+          <maml:name>Path</maml:name>
+          <maml:description>
             <maml:para>Absolute local managed installation root. The official payload stays in its VSO7 child to prevent upstream first-run relocation. Spaces and Unicode are supported. UNC, temporary, protected root, linked and shell-metacharacter paths are rejected. Never defaults to the working directory.</maml:para>
           </maml:description>
           <command:parameterValue required="true">string</command:parameterValue>
         </command:parameter>
-        <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Scope</maml:name>
-          <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+        <command:parameter required="false" position="1" pipelineInput="false" globbing="false">
+          <maml:name>Scope</maml:name>
+          <maml:description>
             <maml:para>CurrentUser or AllUsers. CurrentUser is the safe default in automation; interactive Install-VSO asks when scope and path were omitted.</maml:para>
           </maml:description>
           <command:parameterValue required="true">string</command:parameterValue>
         </command:parameter>
         <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">AllUsers</maml:name>
-          <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+          <maml:name>AllUsers</maml:name>
+          <maml:description>
             <maml:para>Selects AllUsers. Conflicts with an explicit Scope CurrentUser. AllUsers requires an administrator and a protected existing parent folder.</maml:para>
           </maml:description>
         </command:parameter>
-        <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Version</maml:name>
-          <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+        <command:parameter required="false" position="2" pipelineInput="false" globbing="false">
+          <maml:name>Version</maml:name>
+          <maml:description>
             <maml:para>VSO release semantic version, with optional v prefix. Independent of this module version. Update -Force permits an explicit downgrade or reinstall.</maml:para>
           </maml:description>
           <command:parameterValue required="true">string</command:parameterValue>
         </command:parameter>
         <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Prerelease</maml:name>
-          <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+          <maml:name>Prerelease</maml:name>
+          <maml:description>
             <maml:para>Includes preliminary releases. Required when explicitly selecting a prerelease version. Omitted by default.</maml:para>
           </maml:description>
         </command:parameter>
-        <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">AssetName</maml:name>
-          <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+        <command:parameter required="false" position="3" pipelineInput="false" globbing="false">
+          <maml:name>AssetName</maml:name>
+          <maml:description>
             <maml:para>Exact distribution ZIP asset name listed in the official release. Required if more than one ZIP is present.</maml:para>
           </maml:description>
           <command:parameterValue required="true">string</command:parameterValue>
         </command:parameter>
         <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Force</maml:name>
-          <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+          <maml:name>Force</maml:name>
+          <maml:description>
             <maml:para>Suppresses default confirmation when Confirm was not explicitly set. Permits a verified reinstall or downgrade. For Stop, explicitly permits forced termination. Never bypasses safety checks.</maml:para>
           </maml:description>
         </command:parameter>
         <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Quiet</maml:name>
-          <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+          <maml:name>Quiet</maml:name>
+          <maml:description>
             <maml:para>No questions, windows, UAC, or progress. Uses safe install defaults. Ambiguous selection or required elevation fails. Reset additionally requires Force.</maml:para>
           </maml:description>
         </command:parameter>
-        <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Language</maml:name>
-          <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+        <command:parameter required="false" position="4" pipelineInput="false" globbing="false">
+          <maml:name>Language</maml:name>
+          <maml:description>
             <maml:para>es, es-ES, en or en-US. Spanish culture variants use Spanish; all other languages fall back to English. Defaults to PSUICulture.</maml:para>
           </maml:description>
           <command:parameterValue required="true">string</command:parameterValue>
         </command:parameter>
         <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">PassThru</maml:name>
-          <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+          <maml:name>PassThru</maml:name>
+          <maml:description>
             <maml:para>Returns a structured operation result or Help-VSO metadata. Reset -WhatIf -PassThru returns the exact removal plan.</maml:para>
+          </maml:description>
+        </command:parameter>
+        <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
+          <maml:name>WhatIf</maml:name>
+          <maml:description>
+            <maml:para>Shows the intended operation without downloads, file changes, process termination or elevation.</maml:para>
+          </maml:description>
+        </command:parameter>
+        <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
+          <maml:name>Confirm</maml:name>
+          <maml:description>
+            <maml:para>Requests confirmation through PowerShell ShouldProcess. Explicit confirmation is honored; cannot be combined with Quiet.</maml:para>
           </maml:description>
         </command:parameter>
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
-      <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Path</maml:name>
-        <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+      <command:parameter required="false" position="0" pipelineInput="false" globbing="false">
+        <maml:name>Path</maml:name>
+        <maml:description>
           <maml:para>Absolute local managed installation root. The official payload stays in its VSO7 child to prevent upstream first-run relocation. Spaces and Unicode are supported. UNC, temporary, protected root, linked and shell-metacharacter paths are rejected. Never defaults to the working directory.</maml:para>
         </maml:description>
         <command:parameterValue required="true">string</command:parameterValue>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">string</maml:name>
+        <dev:type>
+          <maml:name>string</maml:name>
         </dev:type>
-        <dev:defaultValue xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">LOCALAPPDATA\Programs\VSO or ProgramFiles\VSO</dev:defaultValue>
+        <dev:defaultValue>LOCALAPPDATA\Programs\VSO or ProgramFiles\VSO</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Scope</maml:name>
-        <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+      <command:parameter required="false" position="1" pipelineInput="false" globbing="false">
+        <maml:name>Scope</maml:name>
+        <maml:description>
           <maml:para>CurrentUser or AllUsers. CurrentUser is the safe default in automation; interactive Install-VSO asks when scope and path were omitted.</maml:para>
         </maml:description>
         <command:parameterValue required="true">string</command:parameterValue>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">string</maml:name>
+        <dev:type>
+          <maml:name>string</maml:name>
         </dev:type>
-        <dev:defaultValue xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">CurrentUser in automation; interactive choice otherwise</dev:defaultValue>
+        <dev:defaultValue>CurrentUser in automation; interactive choice otherwise</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">AllUsers</maml:name>
-        <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+        <maml:name>AllUsers</maml:name>
+        <maml:description>
           <maml:para>Selects AllUsers. Conflicts with an explicit Scope CurrentUser. AllUsers requires an administrator and a protected existing parent folder.</maml:para>
         </maml:description>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">switch</maml:name>
+        <dev:type>
+          <maml:name>switch</maml:name>
         </dev:type>
-        <dev:defaultValue xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10"></dev:defaultValue>
+        <dev:defaultValue></dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Version</maml:name>
-        <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+      <command:parameter required="false" position="2" pipelineInput="false" globbing="false">
+        <maml:name>Version</maml:name>
+        <maml:description>
           <maml:para>VSO release semantic version, with optional v prefix. Independent of this module version. Update -Force permits an explicit downgrade or reinstall.</maml:para>
         </maml:description>
         <command:parameterValue required="true">string</command:parameterValue>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">string</maml:name>
+        <dev:type>
+          <maml:name>string</maml:name>
         </dev:type>
-        <dev:defaultValue xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">Latest stable release for Install/Update; all matching versions for discovery</dev:defaultValue>
+        <dev:defaultValue>Latest stable release for Install/Update; all matching versions for discovery</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Prerelease</maml:name>
-        <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+        <maml:name>Prerelease</maml:name>
+        <maml:description>
           <maml:para>Includes preliminary releases. Required when explicitly selecting a prerelease version. Omitted by default.</maml:para>
         </maml:description>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">switch</maml:name>
+        <dev:type>
+          <maml:name>switch</maml:name>
         </dev:type>
-        <dev:defaultValue xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">False</dev:defaultValue>
+        <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">AssetName</maml:name>
-        <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+      <command:parameter required="false" position="3" pipelineInput="false" globbing="false">
+        <maml:name>AssetName</maml:name>
+        <maml:description>
           <maml:para>Exact distribution ZIP asset name listed in the official release. Required if more than one ZIP is present.</maml:para>
         </maml:description>
         <command:parameterValue required="true">string</command:parameterValue>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">string</maml:name>
+        <dev:type>
+          <maml:name>string</maml:name>
         </dev:type>
-        <dev:defaultValue xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10"></dev:defaultValue>
+        <dev:defaultValue></dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Force</maml:name>
-        <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+        <maml:name>Force</maml:name>
+        <maml:description>
           <maml:para>Suppresses default confirmation when Confirm was not explicitly set. Permits a verified reinstall or downgrade. For Stop, explicitly permits forced termination. Never bypasses safety checks.</maml:para>
         </maml:description>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">switch</maml:name>
+        <dev:type>
+          <maml:name>switch</maml:name>
         </dev:type>
-        <dev:defaultValue xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">False</dev:defaultValue>
+        <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Quiet</maml:name>
-        <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+        <maml:name>Quiet</maml:name>
+        <maml:description>
           <maml:para>No questions, windows, UAC, or progress. Uses safe install defaults. Ambiguous selection or required elevation fails. Reset additionally requires Force.</maml:para>
         </maml:description>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">switch</maml:name>
+        <dev:type>
+          <maml:name>switch</maml:name>
         </dev:type>
-        <dev:defaultValue xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">False</dev:defaultValue>
+        <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Language</maml:name>
-        <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+      <command:parameter required="false" position="4" pipelineInput="false" globbing="false">
+        <maml:name>Language</maml:name>
+        <maml:description>
           <maml:para>es, es-ES, en or en-US. Spanish culture variants use Spanish; all other languages fall back to English. Defaults to PSUICulture.</maml:para>
         </maml:description>
         <command:parameterValue required="true">string</command:parameterValue>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">string</maml:name>
+        <dev:type>
+          <maml:name>string</maml:name>
         </dev:type>
-        <dev:defaultValue xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">PSUICulture with explicit English fallback</dev:defaultValue>
+        <dev:defaultValue>PSUICulture with explicit English fallback</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">PassThru</maml:name>
-        <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+        <maml:name>PassThru</maml:name>
+        <maml:description>
           <maml:para>Returns a structured operation result or Help-VSO metadata. Reset -WhatIf -PassThru returns the exact removal plan.</maml:para>
         </maml:description>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">switch</maml:name>
+        <dev:type>
+          <maml:name>switch</maml:name>
         </dev:type>
-        <dev:defaultValue xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">False</dev:defaultValue>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
+        <maml:name>WhatIf</maml:name>
+        <maml:description>
+          <maml:para>Shows the intended operation without downloads, file changes, process termination or elevation.</maml:para>
+        </maml:description>
+        <dev:type>
+          <maml:name>switch</maml:name>
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
+        <maml:name>Confirm</maml:name>
+        <maml:description>
+          <maml:para>Requests confirmation through PowerShell ShouldProcess. Explicit confirmation is honored; cannot be combined with Quiet.</maml:para>
+        </maml:description>
+        <dev:type>
+          <maml:name>switch</maml:name>
+        </dev:type>
+        <dev:defaultValue>ConfirmPreference</dev:defaultValue>
       </command:parameter>
     </command:parameters>
     <command:inputTypes>
       <command:inputType>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">None</maml:name>
+        <dev:type>
+          <maml:name>None</maml:name>
         </dev:type>
       </command:inputType>
     </command:inputTypes>
     <command:returnValues>
       <command:returnValue>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">System.Management.Automation.PSCustomObject</maml:name>
+        <dev:type>
+          <maml:name>System.Management.Automation.PSCustomObject</maml:name>
         </dev:type>
       </command:returnValue>
     </command:returnValues>
-    <command:alertSet>
-      <command:alert>
-        <maml:para xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Removing files does not undo Windows tweaks. Shared Recovery, unknown files and unowned data are preserved. CurrentUser needs access to its folder. AllUsers needs administrator permission. Start uses the official launcher and its own elevation. Targets Windows 11 x64, Windows PowerShell 5.1 and PowerShell 7.x. Live acceptance in both editions is required before publication.</maml:para>
-      </command:alert>
-    </command:alertSet>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Removing files does not undo Windows tweaks. Shared Recovery, unknown files and unowned data are preserved. CurrentUser needs access to its folder. AllUsers needs administrator permission. Start uses the official launcher and its own elevation. Targets Windows 11 x64, Windows PowerShell 5.1 and PowerShell 7.x. Live acceptance in both editions is required before publication.</maml:para>
+      </maml:alert>
+    </maml:alertSet>
     <command:examples>
       <command:example>
-        <maml:title xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Interactive installation</maml:title>
-        <dev:code xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">Install-VSO</dev:code>
-        <dev:remarks xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:para xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Choose scope and the default path, or select a folder.</maml:para>
+        <maml:title>---------------- EXAMPLE 1: Interactive installation ----------------</maml:title>
+        <dev:code>Install-VSO</dev:code>
+        <dev:remarks>
+          <maml:para>Choose scope and the default path, or select a folder.</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
-        <maml:title xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Automated user installation</maml:title>
-        <dev:code xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">Install-VSO -Scope CurrentUser -Version 1.2.2 -Quiet -PassThru</dev:code>
-        <dev:remarks xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:para xmlns:maml="http://schemas.microsoft.com/maml/2004/10">No prompts; safe defaults are used.</maml:para>
+        <maml:title>---------------- EXAMPLE 2: Automated user installation ----------------</maml:title>
+        <dev:code>Install-VSO -Scope CurrentUser -Version 1.2.2 -Quiet -PassThru</dev:code>
+        <dev:remarks>
+          <maml:para>No prompts; safe defaults are used.</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
-        <maml:title xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Custom path</maml:title>
-        <dev:code xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">Install-VSO -Path "D:\Programs\VSO" -Language es</dev:code>
-        <dev:remarks xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:para xmlns:maml="http://schemas.microsoft.com/maml/2004/10">An absolute explicit path resolves the folder decision.</maml:para>
+        <maml:title>---------------- EXAMPLE 3: Custom path ----------------</maml:title>
+        <dev:code>Install-VSO -Path "D:\Programs\VSO" -Language es</dev:code>
+        <dev:remarks>
+          <maml:para>An absolute explicit path resolves the folder decision.</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
-        <maml:title xmlns:maml="http://schemas.microsoft.com/maml/2004/10">All users preview</maml:title>
-        <dev:code xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">Install-VSO -AllUsers -WhatIf</dev:code>
-        <dev:remarks xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:para xmlns:maml="http://schemas.microsoft.com/maml/2004/10">No UAC, lock, download or staging is created.</maml:para>
+        <maml:title>---------------- EXAMPLE 4: All users preview ----------------</maml:title>
+        <dev:code>Install-VSO -AllUsers -WhatIf</dev:code>
+        <dev:remarks>
+          <maml:para>No UAC, lock, download or staging is created.</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
-    <command:relatedLinks />
+    <maml:relatedLinks />
   </command:command>
-  <command:command xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10">
+  <command:command>
     <command:details>
       <command:name>Start-VSO</command:name>
       <command:verb>Start</command:verb>
       <command:noun>VSO</command:noun>
-      <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+      <maml:description>
         <maml:para>Open the selected installation through its official launcher.</maml:para>
       </maml:description>
     </command:details>
-    <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+    <maml:description>
       <maml:para>Revalidates owned files and START VSO7.bat. The batch launcher selects Windows PowerShell 5.1 and owns VSO elevation. Existing instances are detected conservatively. Missing process visibility causes a safe error. Start has no Quiet switch because it intentionally opens an application window. PassThru reports launcher creation, not successful application startup. Manual installations require AllowUnregistered.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Start-VSO</maml:name>
-        <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Path</maml:name>
-          <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+        <maml:name>Start-VSO</maml:name>
+        <command:parameter required="false" position="0" pipelineInput="false" globbing="false">
+          <maml:name>Path</maml:name>
+          <maml:description>
             <maml:para>Absolute local managed installation root. The official payload stays in its VSO7 child to prevent upstream first-run relocation. Spaces and Unicode are supported. UNC, temporary, protected root, linked and shell-metacharacter paths are rejected. Never defaults to the working directory.</maml:para>
           </maml:description>
           <command:parameterValue required="true">string</command:parameterValue>
         </command:parameter>
-        <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Version</maml:name>
-          <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+        <command:parameter required="false" position="1" pipelineInput="false" globbing="false">
+          <maml:name>Version</maml:name>
+          <maml:description>
             <maml:para>VSO release semantic version, with optional v prefix. Independent of this module version. Update -Force permits an explicit downgrade or reinstall.</maml:para>
           </maml:description>
           <command:parameterValue required="true">string</command:parameterValue>
         </command:parameter>
-        <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Language</maml:name>
-          <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+        <command:parameter required="false" position="2" pipelineInput="false" globbing="false">
+          <maml:name>Language</maml:name>
+          <maml:description>
             <maml:para>es, es-ES, en or en-US. Spanish culture variants use Spanish; all other languages fall back to English. Defaults to PSUICulture.</maml:para>
           </maml:description>
           <command:parameterValue required="true">string</command:parameterValue>
         </command:parameter>
         <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">AllowUnregistered</maml:name>
-          <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+          <maml:name>AllowUnregistered</maml:name>
+          <maml:description>
             <maml:para>Explicitly permits launching a manually installed distribution after layout and internal checksum validation. Its official origin has not been established by this manager.</maml:para>
           </maml:description>
         </command:parameter>
         <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">PassThru</maml:name>
-          <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+          <maml:name>PassThru</maml:name>
+          <maml:description>
             <maml:para>Returns a structured operation result or Help-VSO metadata. Reset -WhatIf -PassThru returns the exact removal plan.</maml:para>
+          </maml:description>
+        </command:parameter>
+        <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
+          <maml:name>WhatIf</maml:name>
+          <maml:description>
+            <maml:para>Shows the intended operation without downloads, file changes, process termination or elevation.</maml:para>
+          </maml:description>
+        </command:parameter>
+        <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
+          <maml:name>Confirm</maml:name>
+          <maml:description>
+            <maml:para>Requests confirmation through PowerShell ShouldProcess. Explicit confirmation is honored; cannot be combined with Quiet.</maml:para>
           </maml:description>
         </command:parameter>
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
-      <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Path</maml:name>
-        <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+      <command:parameter required="false" position="0" pipelineInput="false" globbing="false">
+        <maml:name>Path</maml:name>
+        <maml:description>
           <maml:para>Absolute local managed installation root. The official payload stays in its VSO7 child to prevent upstream first-run relocation. Spaces and Unicode are supported. UNC, temporary, protected root, linked and shell-metacharacter paths are rejected. Never defaults to the working directory.</maml:para>
         </maml:description>
         <command:parameterValue required="true">string</command:parameterValue>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">string</maml:name>
+        <dev:type>
+          <maml:name>string</maml:name>
         </dev:type>
-        <dev:defaultValue xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">LOCALAPPDATA\Programs\VSO or ProgramFiles\VSO</dev:defaultValue>
+        <dev:defaultValue>LOCALAPPDATA\Programs\VSO or ProgramFiles\VSO</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Version</maml:name>
-        <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+      <command:parameter required="false" position="1" pipelineInput="false" globbing="false">
+        <maml:name>Version</maml:name>
+        <maml:description>
           <maml:para>VSO release semantic version, with optional v prefix. Independent of this module version. Update -Force permits an explicit downgrade or reinstall.</maml:para>
         </maml:description>
         <command:parameterValue required="true">string</command:parameterValue>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">string</maml:name>
+        <dev:type>
+          <maml:name>string</maml:name>
         </dev:type>
-        <dev:defaultValue xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">Latest stable release for Install/Update; all matching versions for discovery</dev:defaultValue>
+        <dev:defaultValue>Latest stable release for Install/Update; all matching versions for discovery</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Language</maml:name>
-        <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+      <command:parameter required="false" position="2" pipelineInput="false" globbing="false">
+        <maml:name>Language</maml:name>
+        <maml:description>
           <maml:para>es, es-ES, en or en-US. Spanish culture variants use Spanish; all other languages fall back to English. Defaults to PSUICulture.</maml:para>
         </maml:description>
         <command:parameterValue required="true">string</command:parameterValue>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">string</maml:name>
+        <dev:type>
+          <maml:name>string</maml:name>
         </dev:type>
-        <dev:defaultValue xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">PSUICulture with explicit English fallback</dev:defaultValue>
+        <dev:defaultValue>PSUICulture with explicit English fallback</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">AllowUnregistered</maml:name>
-        <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+        <maml:name>AllowUnregistered</maml:name>
+        <maml:description>
           <maml:para>Explicitly permits launching a manually installed distribution after layout and internal checksum validation. Its official origin has not been established by this manager.</maml:para>
         </maml:description>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">switch</maml:name>
+        <dev:type>
+          <maml:name>switch</maml:name>
         </dev:type>
-        <dev:defaultValue xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">False</dev:defaultValue>
+        <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">PassThru</maml:name>
-        <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+        <maml:name>PassThru</maml:name>
+        <maml:description>
           <maml:para>Returns a structured operation result or Help-VSO metadata. Reset -WhatIf -PassThru returns the exact removal plan.</maml:para>
         </maml:description>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">switch</maml:name>
+        <dev:type>
+          <maml:name>switch</maml:name>
         </dev:type>
-        <dev:defaultValue xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">False</dev:defaultValue>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
+        <maml:name>WhatIf</maml:name>
+        <maml:description>
+          <maml:para>Shows the intended operation without downloads, file changes, process termination or elevation.</maml:para>
+        </maml:description>
+        <dev:type>
+          <maml:name>switch</maml:name>
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
+        <maml:name>Confirm</maml:name>
+        <maml:description>
+          <maml:para>Requests confirmation through PowerShell ShouldProcess. Explicit confirmation is honored; cannot be combined with Quiet.</maml:para>
+        </maml:description>
+        <dev:type>
+          <maml:name>switch</maml:name>
+        </dev:type>
+        <dev:defaultValue>ConfirmPreference</dev:defaultValue>
       </command:parameter>
     </command:parameters>
     <command:inputTypes>
       <command:inputType>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">None</maml:name>
+        <dev:type>
+          <maml:name>None</maml:name>
         </dev:type>
       </command:inputType>
     </command:inputTypes>
     <command:returnValues>
       <command:returnValue>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">System.Management.Automation.PSCustomObject</maml:name>
+        <dev:type>
+          <maml:name>System.Management.Automation.PSCustomObject</maml:name>
         </dev:type>
       </command:returnValue>
     </command:returnValues>
-    <command:alertSet>
-      <command:alert>
-        <maml:para xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Removing files does not undo Windows tweaks. Shared Recovery, unknown files and unowned data are preserved. CurrentUser needs access to its folder. AllUsers needs administrator permission. Start uses the official launcher and its own elevation. Targets Windows 11 x64, Windows PowerShell 5.1 and PowerShell 7.x. Live acceptance in both editions is required before publication.</maml:para>
-      </command:alert>
-    </command:alertSet>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Removing files does not undo Windows tweaks. Shared Recovery, unknown files and unowned data are preserved. CurrentUser needs access to its folder. AllUsers needs administrator permission. Start uses the official launcher and its own elevation. Targets Windows 11 x64, Windows PowerShell 5.1 and PowerShell 7.x. Live acceptance in both editions is required before publication.</maml:para>
+      </maml:alert>
+    </maml:alertSet>
     <command:examples>
       <command:example>
-        <maml:title xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Launch</maml:title>
-        <dev:code xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">Start-VSO</dev:code>
-        <dev:remarks xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:para xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Select among multiple installations if necessary.</maml:para>
+        <maml:title>---------------- EXAMPLE 1: Launch ----------------</maml:title>
+        <dev:code>Start-VSO</dev:code>
+        <dev:remarks>
+          <maml:para>Select among multiple installations if necessary.</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
-        <maml:title xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Launch a selected installation</maml:title>
-        <dev:code xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">Start-VSO -Path "D:\Programs\VSO" -PassThru</dev:code>
-        <dev:remarks xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:para xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Inspect LauncherProcessId and StartupVerified.</maml:para>
+        <maml:title>---------------- EXAMPLE 2: Launch a selected installation ----------------</maml:title>
+        <dev:code>Start-VSO -Path "D:\Programs\VSO" -PassThru</dev:code>
+        <dev:remarks>
+          <maml:para>Inspect LauncherProcessId and StartupVerified.</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
-    <command:relatedLinks />
+    <maml:relatedLinks />
   </command:command>
-  <command:command xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10">
+  <command:command>
     <command:details>
       <command:name>Stop-VSO</command:name>
       <command:verb>Stop</command:verb>
       <command:noun>VSO</command:noun>
-      <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+      <maml:description>
         <maml:para>Close only strictly attributed VSO processes.</maml:para>
       </maml:description>
     </command:details>
-    <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+    <maml:description>
       <maml:para>Matches the exact official launcher, script path or the protected memory host source and SHA-256. Does not terminate Windows Terminal or arbitrary descendants. PID creation time and command line are checked again before termination. VSO7 has no verified clean IPC shutdown contract: without Force, close VSO yourself. Force explicitly permits interruption, potentially during Recovery. Incomplete process visibility fails safely; interactive Force may request UAC.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Stop-VSO</maml:name>
-        <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Path</maml:name>
-          <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+        <maml:name>Stop-VSO</maml:name>
+        <command:parameter required="false" position="0" pipelineInput="false" globbing="false">
+          <maml:name>Path</maml:name>
+          <maml:description>
             <maml:para>Absolute local managed installation root. The official payload stays in its VSO7 child to prevent upstream first-run relocation. Spaces and Unicode are supported. UNC, temporary, protected root, linked and shell-metacharacter paths are rejected. Never defaults to the working directory.</maml:para>
           </maml:description>
           <command:parameterValue required="true">string</command:parameterValue>
         </command:parameter>
-        <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Version</maml:name>
-          <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+        <command:parameter required="false" position="1" pipelineInput="false" globbing="false">
+          <maml:name>Version</maml:name>
+          <maml:description>
             <maml:para>VSO release semantic version, with optional v prefix. Independent of this module version. Update -Force permits an explicit downgrade or reinstall.</maml:para>
           </maml:description>
           <command:parameterValue required="true">string</command:parameterValue>
         </command:parameter>
         <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Force</maml:name>
-          <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+          <maml:name>Force</maml:name>
+          <maml:description>
             <maml:para>Suppresses default confirmation when Confirm was not explicitly set. Permits a verified reinstall or downgrade. For Stop, explicitly permits forced termination. Never bypasses safety checks.</maml:para>
           </maml:description>
         </command:parameter>
         <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Quiet</maml:name>
-          <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+          <maml:name>Quiet</maml:name>
+          <maml:description>
             <maml:para>No questions, windows, UAC, or progress. Uses safe install defaults. Ambiguous selection or required elevation fails. Reset additionally requires Force.</maml:para>
           </maml:description>
         </command:parameter>
-        <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Language</maml:name>
-          <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+        <command:parameter required="false" position="2" pipelineInput="false" globbing="false">
+          <maml:name>Language</maml:name>
+          <maml:description>
             <maml:para>es, es-ES, en or en-US. Spanish culture variants use Spanish; all other languages fall back to English. Defaults to PSUICulture.</maml:para>
           </maml:description>
           <command:parameterValue required="true">string</command:parameterValue>
         </command:parameter>
         <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">PassThru</maml:name>
-          <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+          <maml:name>PassThru</maml:name>
+          <maml:description>
             <maml:para>Returns a structured operation result or Help-VSO metadata. Reset -WhatIf -PassThru returns the exact removal plan.</maml:para>
+          </maml:description>
+        </command:parameter>
+        <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
+          <maml:name>WhatIf</maml:name>
+          <maml:description>
+            <maml:para>Shows the intended operation without downloads, file changes, process termination or elevation.</maml:para>
+          </maml:description>
+        </command:parameter>
+        <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
+          <maml:name>Confirm</maml:name>
+          <maml:description>
+            <maml:para>Requests confirmation through PowerShell ShouldProcess. Explicit confirmation is honored; cannot be combined with Quiet.</maml:para>
           </maml:description>
         </command:parameter>
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
-      <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Path</maml:name>
-        <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+      <command:parameter required="false" position="0" pipelineInput="false" globbing="false">
+        <maml:name>Path</maml:name>
+        <maml:description>
           <maml:para>Absolute local managed installation root. The official payload stays in its VSO7 child to prevent upstream first-run relocation. Spaces and Unicode are supported. UNC, temporary, protected root, linked and shell-metacharacter paths are rejected. Never defaults to the working directory.</maml:para>
         </maml:description>
         <command:parameterValue required="true">string</command:parameterValue>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">string</maml:name>
+        <dev:type>
+          <maml:name>string</maml:name>
         </dev:type>
-        <dev:defaultValue xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">LOCALAPPDATA\Programs\VSO or ProgramFiles\VSO</dev:defaultValue>
+        <dev:defaultValue>LOCALAPPDATA\Programs\VSO or ProgramFiles\VSO</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Version</maml:name>
-        <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+      <command:parameter required="false" position="1" pipelineInput="false" globbing="false">
+        <maml:name>Version</maml:name>
+        <maml:description>
           <maml:para>VSO release semantic version, with optional v prefix. Independent of this module version. Update -Force permits an explicit downgrade or reinstall.</maml:para>
         </maml:description>
         <command:parameterValue required="true">string</command:parameterValue>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">string</maml:name>
+        <dev:type>
+          <maml:name>string</maml:name>
         </dev:type>
-        <dev:defaultValue xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">Latest stable release for Install/Update; all matching versions for discovery</dev:defaultValue>
+        <dev:defaultValue>Latest stable release for Install/Update; all matching versions for discovery</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Force</maml:name>
-        <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+        <maml:name>Force</maml:name>
+        <maml:description>
           <maml:para>Suppresses default confirmation when Confirm was not explicitly set. Permits a verified reinstall or downgrade. For Stop, explicitly permits forced termination. Never bypasses safety checks.</maml:para>
         </maml:description>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">switch</maml:name>
+        <dev:type>
+          <maml:name>switch</maml:name>
         </dev:type>
-        <dev:defaultValue xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">False</dev:defaultValue>
+        <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Quiet</maml:name>
-        <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+        <maml:name>Quiet</maml:name>
+        <maml:description>
           <maml:para>No questions, windows, UAC, or progress. Uses safe install defaults. Ambiguous selection or required elevation fails. Reset additionally requires Force.</maml:para>
         </maml:description>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">switch</maml:name>
+        <dev:type>
+          <maml:name>switch</maml:name>
         </dev:type>
-        <dev:defaultValue xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">False</dev:defaultValue>
+        <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Language</maml:name>
-        <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+      <command:parameter required="false" position="2" pipelineInput="false" globbing="false">
+        <maml:name>Language</maml:name>
+        <maml:description>
           <maml:para>es, es-ES, en or en-US. Spanish culture variants use Spanish; all other languages fall back to English. Defaults to PSUICulture.</maml:para>
         </maml:description>
         <command:parameterValue required="true">string</command:parameterValue>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">string</maml:name>
+        <dev:type>
+          <maml:name>string</maml:name>
         </dev:type>
-        <dev:defaultValue xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">PSUICulture with explicit English fallback</dev:defaultValue>
+        <dev:defaultValue>PSUICulture with explicit English fallback</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">PassThru</maml:name>
-        <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+        <maml:name>PassThru</maml:name>
+        <maml:description>
           <maml:para>Returns a structured operation result or Help-VSO metadata. Reset -WhatIf -PassThru returns the exact removal plan.</maml:para>
         </maml:description>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">switch</maml:name>
+        <dev:type>
+          <maml:name>switch</maml:name>
         </dev:type>
-        <dev:defaultValue xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">False</dev:defaultValue>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
+        <maml:name>WhatIf</maml:name>
+        <maml:description>
+          <maml:para>Shows the intended operation without downloads, file changes, process termination or elevation.</maml:para>
+        </maml:description>
+        <dev:type>
+          <maml:name>switch</maml:name>
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
+        <maml:name>Confirm</maml:name>
+        <maml:description>
+          <maml:para>Requests confirmation through PowerShell ShouldProcess. Explicit confirmation is honored; cannot be combined with Quiet.</maml:para>
+        </maml:description>
+        <dev:type>
+          <maml:name>switch</maml:name>
+        </dev:type>
+        <dev:defaultValue>ConfirmPreference</dev:defaultValue>
       </command:parameter>
     </command:parameters>
     <command:inputTypes>
       <command:inputType>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">None</maml:name>
+        <dev:type>
+          <maml:name>None</maml:name>
         </dev:type>
       </command:inputType>
     </command:inputTypes>
     <command:returnValues>
       <command:returnValue>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">System.Management.Automation.PSCustomObject</maml:name>
+        <dev:type>
+          <maml:name>System.Management.Automation.PSCustomObject</maml:name>
         </dev:type>
       </command:returnValue>
     </command:returnValues>
-    <command:alertSet>
-      <command:alert>
-        <maml:para xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Removing files does not undo Windows tweaks. Shared Recovery, unknown files and unowned data are preserved. CurrentUser needs access to its folder. AllUsers needs administrator permission. Start uses the official launcher and its own elevation. Targets Windows 11 x64, Windows PowerShell 5.1 and PowerShell 7.x. Live acceptance in both editions is required before publication.</maml:para>
-      </command:alert>
-    </command:alertSet>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Removing files does not undo Windows tweaks. Shared Recovery, unknown files and unowned data are preserved. CurrentUser needs access to its folder. AllUsers needs administrator permission. Start uses the official launcher and its own elevation. Targets Windows 11 x64, Windows PowerShell 5.1 and PowerShell 7.x. Live acceptance in both editions is required before publication.</maml:para>
+      </maml:alert>
+    </maml:alertSet>
     <command:examples>
       <command:example>
-        <maml:title xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Preview</maml:title>
-        <dev:code xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">Stop-VSO -Path "D:\Programs\VSO" -WhatIf</dev:code>
-        <dev:remarks xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:para xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Inspect the attributed PIDs.</maml:para>
+        <maml:title>---------------- EXAMPLE 1: Preview ----------------</maml:title>
+        <dev:code>Stop-VSO -Path "D:\Programs\VSO" -WhatIf</dev:code>
+        <dev:remarks>
+          <maml:para>Inspect the attributed PIDs.</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
-        <maml:title xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Explicit forced termination</maml:title>
-        <dev:code xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">Stop-VSO -Path "D:\Programs\VSO" -Force -PassThru</dev:code>
-        <dev:remarks xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:para xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Use only after considering pending work and Recovery.</maml:para>
+        <maml:title>---------------- EXAMPLE 2: Explicit forced termination ----------------</maml:title>
+        <dev:code>Stop-VSO -Path "D:\Programs\VSO" -Force -PassThru</dev:code>
+        <dev:remarks>
+          <maml:para>Use only after considering pending work and Recovery.</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
-    <command:relatedLinks />
+    <maml:relatedLinks />
   </command:command>
-  <command:command xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10">
+  <command:command>
     <command:details>
       <command:name>Update-VSO</command:name>
       <command:verb>Update</command:verb>
       <command:noun>VSO</command:noun>
-      <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+      <maml:description>
         <maml:para>Update a managed installation with verified transactional replacement.</maml:para>
       </maml:description>
     </command:details>
-    <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+    <maml:description>
       <maml:para>Uses official releases and semantic version precedence. Equal or older versions are skipped unless Force was explicitly supplied. Unknown files, configuration and backups are copied to the next installation; the previous directory is retained. Failures restore the previous directory where possible. An interrupted ambiguous transaction fails with its journal path. Running or insufficiently visible VSO processes block replacement. Cross-generation migration is rejected.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Update-VSO</maml:name>
-        <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Path</maml:name>
-          <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+        <maml:name>Update-VSO</maml:name>
+        <command:parameter required="false" position="0" pipelineInput="false" globbing="false">
+          <maml:name>Path</maml:name>
+          <maml:description>
             <maml:para>Absolute local managed installation root. The official payload stays in its VSO7 child to prevent upstream first-run relocation. Spaces and Unicode are supported. UNC, temporary, protected root, linked and shell-metacharacter paths are rejected. Never defaults to the working directory.</maml:para>
           </maml:description>
           <command:parameterValue required="true">string</command:parameterValue>
         </command:parameter>
-        <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Version</maml:name>
-          <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+        <command:parameter required="false" position="1" pipelineInput="false" globbing="false">
+          <maml:name>Version</maml:name>
+          <maml:description>
             <maml:para>VSO release semantic version, with optional v prefix. Independent of this module version. Update -Force permits an explicit downgrade or reinstall.</maml:para>
           </maml:description>
           <command:parameterValue required="true">string</command:parameterValue>
         </command:parameter>
         <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Prerelease</maml:name>
-          <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+          <maml:name>Prerelease</maml:name>
+          <maml:description>
             <maml:para>Includes preliminary releases. Required when explicitly selecting a prerelease version. Omitted by default.</maml:para>
           </maml:description>
         </command:parameter>
-        <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">AssetName</maml:name>
-          <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+        <command:parameter required="false" position="2" pipelineInput="false" globbing="false">
+          <maml:name>AssetName</maml:name>
+          <maml:description>
             <maml:para>Exact distribution ZIP asset name listed in the official release. Required if more than one ZIP is present.</maml:para>
           </maml:description>
           <command:parameterValue required="true">string</command:parameterValue>
         </command:parameter>
         <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Force</maml:name>
-          <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+          <maml:name>Force</maml:name>
+          <maml:description>
             <maml:para>Suppresses default confirmation when Confirm was not explicitly set. Permits a verified reinstall or downgrade. For Stop, explicitly permits forced termination. Never bypasses safety checks.</maml:para>
           </maml:description>
         </command:parameter>
         <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Quiet</maml:name>
-          <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+          <maml:name>Quiet</maml:name>
+          <maml:description>
             <maml:para>No questions, windows, UAC, or progress. Uses safe install defaults. Ambiguous selection or required elevation fails. Reset additionally requires Force.</maml:para>
           </maml:description>
         </command:parameter>
-        <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Language</maml:name>
-          <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+        <command:parameter required="false" position="3" pipelineInput="false" globbing="false">
+          <maml:name>Language</maml:name>
+          <maml:description>
             <maml:para>es, es-ES, en or en-US. Spanish culture variants use Spanish; all other languages fall back to English. Defaults to PSUICulture.</maml:para>
           </maml:description>
           <command:parameterValue required="true">string</command:parameterValue>
         </command:parameter>
         <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">PassThru</maml:name>
-          <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+          <maml:name>PassThru</maml:name>
+          <maml:description>
             <maml:para>Returns a structured operation result or Help-VSO metadata. Reset -WhatIf -PassThru returns the exact removal plan.</maml:para>
+          </maml:description>
+        </command:parameter>
+        <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
+          <maml:name>WhatIf</maml:name>
+          <maml:description>
+            <maml:para>Shows the intended operation without downloads, file changes, process termination or elevation.</maml:para>
+          </maml:description>
+        </command:parameter>
+        <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
+          <maml:name>Confirm</maml:name>
+          <maml:description>
+            <maml:para>Requests confirmation through PowerShell ShouldProcess. Explicit confirmation is honored; cannot be combined with Quiet.</maml:para>
           </maml:description>
         </command:parameter>
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
-      <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Path</maml:name>
-        <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+      <command:parameter required="false" position="0" pipelineInput="false" globbing="false">
+        <maml:name>Path</maml:name>
+        <maml:description>
           <maml:para>Absolute local managed installation root. The official payload stays in its VSO7 child to prevent upstream first-run relocation. Spaces and Unicode are supported. UNC, temporary, protected root, linked and shell-metacharacter paths are rejected. Never defaults to the working directory.</maml:para>
         </maml:description>
         <command:parameterValue required="true">string</command:parameterValue>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">string</maml:name>
+        <dev:type>
+          <maml:name>string</maml:name>
         </dev:type>
-        <dev:defaultValue xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">LOCALAPPDATA\Programs\VSO or ProgramFiles\VSO</dev:defaultValue>
+        <dev:defaultValue>LOCALAPPDATA\Programs\VSO or ProgramFiles\VSO</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Version</maml:name>
-        <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+      <command:parameter required="false" position="1" pipelineInput="false" globbing="false">
+        <maml:name>Version</maml:name>
+        <maml:description>
           <maml:para>VSO release semantic version, with optional v prefix. Independent of this module version. Update -Force permits an explicit downgrade or reinstall.</maml:para>
         </maml:description>
         <command:parameterValue required="true">string</command:parameterValue>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">string</maml:name>
+        <dev:type>
+          <maml:name>string</maml:name>
         </dev:type>
-        <dev:defaultValue xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">Latest stable release for Install/Update; all matching versions for discovery</dev:defaultValue>
+        <dev:defaultValue>Latest stable release for Install/Update; all matching versions for discovery</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Prerelease</maml:name>
-        <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+        <maml:name>Prerelease</maml:name>
+        <maml:description>
           <maml:para>Includes preliminary releases. Required when explicitly selecting a prerelease version. Omitted by default.</maml:para>
         </maml:description>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">switch</maml:name>
+        <dev:type>
+          <maml:name>switch</maml:name>
         </dev:type>
-        <dev:defaultValue xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">False</dev:defaultValue>
+        <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">AssetName</maml:name>
-        <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+      <command:parameter required="false" position="2" pipelineInput="false" globbing="false">
+        <maml:name>AssetName</maml:name>
+        <maml:description>
           <maml:para>Exact distribution ZIP asset name listed in the official release. Required if more than one ZIP is present.</maml:para>
         </maml:description>
         <command:parameterValue required="true">string</command:parameterValue>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">string</maml:name>
+        <dev:type>
+          <maml:name>string</maml:name>
         </dev:type>
-        <dev:defaultValue xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10"></dev:defaultValue>
+        <dev:defaultValue></dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Force</maml:name>
-        <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+        <maml:name>Force</maml:name>
+        <maml:description>
           <maml:para>Suppresses default confirmation when Confirm was not explicitly set. Permits a verified reinstall or downgrade. For Stop, explicitly permits forced termination. Never bypasses safety checks.</maml:para>
         </maml:description>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">switch</maml:name>
+        <dev:type>
+          <maml:name>switch</maml:name>
         </dev:type>
-        <dev:defaultValue xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">False</dev:defaultValue>
+        <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Quiet</maml:name>
-        <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+        <maml:name>Quiet</maml:name>
+        <maml:description>
           <maml:para>No questions, windows, UAC, or progress. Uses safe install defaults. Ambiguous selection or required elevation fails. Reset additionally requires Force.</maml:para>
         </maml:description>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">switch</maml:name>
+        <dev:type>
+          <maml:name>switch</maml:name>
         </dev:type>
-        <dev:defaultValue xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">False</dev:defaultValue>
+        <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Language</maml:name>
-        <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+      <command:parameter required="false" position="3" pipelineInput="false" globbing="false">
+        <maml:name>Language</maml:name>
+        <maml:description>
           <maml:para>es, es-ES, en or en-US. Spanish culture variants use Spanish; all other languages fall back to English. Defaults to PSUICulture.</maml:para>
         </maml:description>
         <command:parameterValue required="true">string</command:parameterValue>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">string</maml:name>
+        <dev:type>
+          <maml:name>string</maml:name>
         </dev:type>
-        <dev:defaultValue xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">PSUICulture with explicit English fallback</dev:defaultValue>
+        <dev:defaultValue>PSUICulture with explicit English fallback</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">PassThru</maml:name>
-        <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+        <maml:name>PassThru</maml:name>
+        <maml:description>
           <maml:para>Returns a structured operation result or Help-VSO metadata. Reset -WhatIf -PassThru returns the exact removal plan.</maml:para>
         </maml:description>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">switch</maml:name>
+        <dev:type>
+          <maml:name>switch</maml:name>
         </dev:type>
-        <dev:defaultValue xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">False</dev:defaultValue>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
+        <maml:name>WhatIf</maml:name>
+        <maml:description>
+          <maml:para>Shows the intended operation without downloads, file changes, process termination or elevation.</maml:para>
+        </maml:description>
+        <dev:type>
+          <maml:name>switch</maml:name>
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
+        <maml:name>Confirm</maml:name>
+        <maml:description>
+          <maml:para>Requests confirmation through PowerShell ShouldProcess. Explicit confirmation is honored; cannot be combined with Quiet.</maml:para>
+        </maml:description>
+        <dev:type>
+          <maml:name>switch</maml:name>
+        </dev:type>
+        <dev:defaultValue>ConfirmPreference</dev:defaultValue>
       </command:parameter>
     </command:parameters>
     <command:inputTypes>
       <command:inputType>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">None</maml:name>
+        <dev:type>
+          <maml:name>None</maml:name>
         </dev:type>
       </command:inputType>
     </command:inputTypes>
     <command:returnValues>
       <command:returnValue>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">System.Management.Automation.PSCustomObject</maml:name>
+        <dev:type>
+          <maml:name>System.Management.Automation.PSCustomObject</maml:name>
         </dev:type>
       </command:returnValue>
     </command:returnValues>
-    <command:alertSet>
-      <command:alert>
-        <maml:para xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Removing files does not undo Windows tweaks. Shared Recovery, unknown files and unowned data are preserved. CurrentUser needs access to its folder. AllUsers needs administrator permission. Start uses the official launcher and its own elevation. Targets Windows 11 x64, Windows PowerShell 5.1 and PowerShell 7.x. Live acceptance in both editions is required before publication.</maml:para>
-      </command:alert>
-    </command:alertSet>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Removing files does not undo Windows tweaks. Shared Recovery, unknown files and unowned data are preserved. CurrentUser needs access to its folder. AllUsers needs administrator permission. Start uses the official launcher and its own elevation. Targets Windows 11 x64, Windows PowerShell 5.1 and PowerShell 7.x. Live acceptance in both editions is required before publication.</maml:para>
+      </maml:alert>
+    </maml:alertSet>
     <command:examples>
       <command:example>
-        <maml:title xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Stable update</maml:title>
-        <dev:code xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">Update-VSO -Quiet -PassThru</dev:code>
-        <dev:remarks xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:para xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Requires one unambiguous installation and sufficient permissions.</maml:para>
+        <maml:title>---------------- EXAMPLE 1: Stable update ----------------</maml:title>
+        <dev:code>Update-VSO -Quiet -PassThru</dev:code>
+        <dev:remarks>
+          <maml:para>Requires one unambiguous installation and sufficient permissions.</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
-        <maml:title xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Preview</maml:title>
-        <dev:code xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">Update-VSO -Path "D:\Programs\VSO" -WhatIf</dev:code>
-        <dev:remarks xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:para xmlns:maml="http://schemas.microsoft.com/maml/2004/10">No download, elevation or replacement.</maml:para>
+        <maml:title>---------------- EXAMPLE 2: Preview ----------------</maml:title>
+        <dev:code>Update-VSO -Path "D:\Programs\VSO" -WhatIf</dev:code>
+        <dev:remarks>
+          <maml:para>No download, elevation or replacement.</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
-        <maml:title xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Explicit reinstall</maml:title>
-        <dev:code xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">Update-VSO -Version 1.2.2 -Force</dev:code>
-        <dev:remarks xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:para xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Integrity and ownership checks remain mandatory.</maml:para>
+        <maml:title>---------------- EXAMPLE 3: Explicit reinstall ----------------</maml:title>
+        <dev:code>Update-VSO -Version 1.2.2 -Force</dev:code>
+        <dev:remarks>
+          <maml:para>Integrity and ownership checks remain mandatory.</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
-    <command:relatedLinks />
+    <maml:relatedLinks />
   </command:command>
-  <command:command xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10">
+  <command:command>
     <command:details>
       <command:name>Get-VSOStatus</command:name>
       <command:verb>Get</command:verb>
       <command:noun>VSOStatus</command:noun>
-      <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+      <maml:description>
         <maml:para>Report installation integrity and attributable process activity.</maml:para>
       </maml:description>
     </command:details>
-    <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
-      <maml:para>Read-only, structured status. ProcessState Unknown means visibility was insufficient; Idle only means that no attributed process was found with available evidence. Status does not check Internet updates or claim VSO finished startup. No confirmations or writes.</maml:para>
+    <maml:description>
+      <maml:para>Returns one VSO.Status summary with Kind Summary and InstallationState NotInstalled when no installation matches. This is a query result, not an installation record. Missing values are null and Running is a Boolean (null for unknown process visibility). Native display is localized; Select-Object and JSON retain the raw properties. Scope and Version filter the query; an empty filtered result does not prove global absence. Path accepts pipeline strings or objects with a Path property. Read-only, structured status. ProcessState Unknown means visibility was insufficient; Idle only means that no attributed process was found with available evidence. Status does not check Internet updates or claim VSO finished startup. No confirmations or writes.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Get-VSOStatus</maml:name>
-        <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Path</maml:name>
-          <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+        <maml:name>Get-VSOStatus</maml:name>
+        <command:parameter required="false" position="0" pipelineInput="true (ByValue, ByPropertyName)" globbing="false">
+          <maml:name>Path</maml:name>
+          <maml:description>
             <maml:para>Absolute local managed installation root. The official payload stays in its VSO7 child to prevent upstream first-run relocation. Spaces and Unicode are supported. UNC, temporary, protected root, linked and shell-metacharacter paths are rejected. Never defaults to the working directory.</maml:para>
           </maml:description>
           <command:parameterValue required="true">string</command:parameterValue>
         </command:parameter>
-        <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Scope</maml:name>
-          <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+        <command:parameter required="false" position="1" pipelineInput="false" globbing="false">
+          <maml:name>Scope</maml:name>
+          <maml:description>
             <maml:para>CurrentUser or AllUsers. CurrentUser is the safe default in automation; interactive Install-VSO asks when scope and path were omitted.</maml:para>
           </maml:description>
           <command:parameterValue required="true">string</command:parameterValue>
         </command:parameter>
-        <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Version</maml:name>
-          <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+        <command:parameter required="false" position="2" pipelineInput="false" globbing="false">
+          <maml:name>Version</maml:name>
+          <maml:description>
             <maml:para>VSO release semantic version, with optional v prefix. Independent of this module version. Update -Force permits an explicit downgrade or reinstall.</maml:para>
           </maml:description>
           <command:parameterValue required="true">string</command:parameterValue>
         </command:parameter>
-        <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Language</maml:name>
-          <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+        <command:parameter required="false" position="3" pipelineInput="false" globbing="false">
+          <maml:name>Language</maml:name>
+          <maml:description>
             <maml:para>es, es-ES, en or en-US. Spanish culture variants use Spanish; all other languages fall back to English. Defaults to PSUICulture.</maml:para>
           </maml:description>
           <command:parameterValue required="true">string</command:parameterValue>
         </command:parameter>
         <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Quiet</maml:name>
-          <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+          <maml:name>Quiet</maml:name>
+          <maml:description>
             <maml:para>No questions, windows, UAC, or progress. Uses safe install defaults. Ambiguous selection or required elevation fails. Reset additionally requires Force.</maml:para>
           </maml:description>
         </command:parameter>
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
-      <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Path</maml:name>
-        <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+      <command:parameter required="false" position="0" pipelineInput="true (ByValue, ByPropertyName)" globbing="false">
+        <maml:name>Path</maml:name>
+        <maml:description>
           <maml:para>Absolute local managed installation root. The official payload stays in its VSO7 child to prevent upstream first-run relocation. Spaces and Unicode are supported. UNC, temporary, protected root, linked and shell-metacharacter paths are rejected. Never defaults to the working directory.</maml:para>
         </maml:description>
         <command:parameterValue required="true">string</command:parameterValue>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">string</maml:name>
+        <dev:type>
+          <maml:name>string</maml:name>
         </dev:type>
-        <dev:defaultValue xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">LOCALAPPDATA\Programs\VSO or ProgramFiles\VSO</dev:defaultValue>
+        <dev:defaultValue>LOCALAPPDATA\Programs\VSO or ProgramFiles\VSO</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Scope</maml:name>
-        <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+      <command:parameter required="false" position="1" pipelineInput="false" globbing="false">
+        <maml:name>Scope</maml:name>
+        <maml:description>
           <maml:para>CurrentUser or AllUsers. CurrentUser is the safe default in automation; interactive Install-VSO asks when scope and path were omitted.</maml:para>
         </maml:description>
         <command:parameterValue required="true">string</command:parameterValue>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">string</maml:name>
+        <dev:type>
+          <maml:name>string</maml:name>
         </dev:type>
-        <dev:defaultValue xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">CurrentUser in automation; interactive choice otherwise</dev:defaultValue>
+        <dev:defaultValue>CurrentUser in automation; interactive choice otherwise</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Version</maml:name>
-        <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+      <command:parameter required="false" position="2" pipelineInput="false" globbing="false">
+        <maml:name>Version</maml:name>
+        <maml:description>
           <maml:para>VSO release semantic version, with optional v prefix. Independent of this module version. Update -Force permits an explicit downgrade or reinstall.</maml:para>
         </maml:description>
         <command:parameterValue required="true">string</command:parameterValue>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">string</maml:name>
+        <dev:type>
+          <maml:name>string</maml:name>
         </dev:type>
-        <dev:defaultValue xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">Latest stable release for Install/Update; all matching versions for discovery</dev:defaultValue>
+        <dev:defaultValue>Latest stable release for Install/Update; all matching versions for discovery</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Language</maml:name>
-        <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+      <command:parameter required="false" position="3" pipelineInput="false" globbing="false">
+        <maml:name>Language</maml:name>
+        <maml:description>
           <maml:para>es, es-ES, en or en-US. Spanish culture variants use Spanish; all other languages fall back to English. Defaults to PSUICulture.</maml:para>
         </maml:description>
         <command:parameterValue required="true">string</command:parameterValue>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">string</maml:name>
+        <dev:type>
+          <maml:name>string</maml:name>
         </dev:type>
-        <dev:defaultValue xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">PSUICulture with explicit English fallback</dev:defaultValue>
+        <dev:defaultValue>PSUICulture with explicit English fallback</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Quiet</maml:name>
-        <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+        <maml:name>Quiet</maml:name>
+        <maml:description>
           <maml:para>No questions, windows, UAC, or progress. Uses safe install defaults. Ambiguous selection or required elevation fails. Reset additionally requires Force.</maml:para>
         </maml:description>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">switch</maml:name>
+        <dev:type>
+          <maml:name>switch</maml:name>
         </dev:type>
-        <dev:defaultValue xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">False</dev:defaultValue>
+        <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
     </command:parameters>
     <command:inputTypes>
       <command:inputType>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">None</maml:name>
+        <dev:type>
+          <maml:name>System.String, System.Management.Automation.PSObject (Path)</maml:name>
         </dev:type>
       </command:inputType>
     </command:inputTypes>
     <command:returnValues>
       <command:returnValue>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">System.Management.Automation.PSCustomObject</maml:name>
+        <dev:type>
+          <maml:name>System.Management.Automation.PSCustomObject</maml:name>
         </dev:type>
       </command:returnValue>
     </command:returnValues>
-    <command:alertSet>
-      <command:alert>
-        <maml:para xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Removing files does not undo Windows tweaks. Shared Recovery, unknown files and unowned data are preserved. CurrentUser needs access to its folder. AllUsers needs administrator permission. Start uses the official launcher and its own elevation. Targets Windows 11 x64, Windows PowerShell 5.1 and PowerShell 7.x. Live acceptance in both editions is required before publication.</maml:para>
-      </command:alert>
-    </command:alertSet>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Removing files does not undo Windows tweaks. Shared Recovery, unknown files and unowned data are preserved. CurrentUser needs access to its folder. AllUsers needs administrator permission. Start uses the official launcher and its own elevation. Targets Windows 11 x64, Windows PowerShell 5.1 and PowerShell 7.x. Live acceptance in both editions is required before publication.</maml:para>
+      </maml:alert>
+    </maml:alertSet>
     <command:examples>
       <command:example>
-        <maml:title xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Status</maml:title>
-        <dev:code xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">Get-VSOStatus -Quiet | Format-List</dev:code>
-        <dev:remarks xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:para xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Includes state diagnostics and process visibility.</maml:para>
+        <maml:title>---------------- EXAMPLE 1: Status ----------------</maml:title>
+        <dev:code>Get-VSOStatus -Quiet | Format-List</dev:code>
+        <dev:remarks>
+          <maml:para>Includes state diagnostics and process visibility.</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
-    <command:relatedLinks />
+    <maml:relatedLinks />
   </command:command>
-  <command:command xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10">
+  <command:command>
     <command:details>
       <command:name>Get-VSOInstallation</command:name>
       <command:verb>Get</command:verb>
       <command:noun>VSOInstallation</command:noun>
-      <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+      <maml:description>
         <maml:para>Enumerate registered installations and limited default-folder discoveries.</maml:para>
       </maml:description>
     </command:details>
-    <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
-      <maml:para>Returns structured objects with version, generation, scope, path, state, receipt and diagnostics. Does not prompt or scan drives. Path also inspects a manual installation; internal checksums do not prove its official origin. Missing or modified installations are reported explicitly. No files or registry keys are created.</maml:para>
+    <maml:description>
+      <maml:para>No matches returns an empty collection, including in interactive use; use Get-VSOStatus for an explicit absence summary. An explicit absent Path returns Missing; malformed/incomplete folders are Modified; local valid distributions without receipts are Unregistered. Index access errors are errors, not empty results. Path accepts pipeline strings or objects with a Path property. Returns structured objects with version, generation, scope, path, state, receipt and diagnostics. Does not prompt or scan drives. Path also inspects a manual installation; internal checksums do not prove its official origin. Missing or modified installations are reported explicitly. No files or registry keys are created.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Get-VSOInstallation</maml:name>
-        <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Path</maml:name>
-          <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+        <maml:name>Get-VSOInstallation</maml:name>
+        <command:parameter required="false" position="0" pipelineInput="true (ByValue, ByPropertyName)" globbing="false">
+          <maml:name>Path</maml:name>
+          <maml:description>
             <maml:para>Absolute local managed installation root. The official payload stays in its VSO7 child to prevent upstream first-run relocation. Spaces and Unicode are supported. UNC, temporary, protected root, linked and shell-metacharacter paths are rejected. Never defaults to the working directory.</maml:para>
           </maml:description>
           <command:parameterValue required="true">string</command:parameterValue>
         </command:parameter>
-        <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Scope</maml:name>
-          <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+        <command:parameter required="false" position="1" pipelineInput="false" globbing="false">
+          <maml:name>Scope</maml:name>
+          <maml:description>
             <maml:para>CurrentUser or AllUsers. CurrentUser is the safe default in automation; interactive Install-VSO asks when scope and path were omitted.</maml:para>
           </maml:description>
           <command:parameterValue required="true">string</command:parameterValue>
         </command:parameter>
-        <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Version</maml:name>
-          <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+        <command:parameter required="false" position="2" pipelineInput="false" globbing="false">
+          <maml:name>Version</maml:name>
+          <maml:description>
             <maml:para>VSO release semantic version, with optional v prefix. Independent of this module version. Update -Force permits an explicit downgrade or reinstall.</maml:para>
           </maml:description>
           <command:parameterValue required="true">string</command:parameterValue>
         </command:parameter>
-        <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Language</maml:name>
-          <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+        <command:parameter required="false" position="3" pipelineInput="false" globbing="false">
+          <maml:name>Language</maml:name>
+          <maml:description>
             <maml:para>es, es-ES, en or en-US. Spanish culture variants use Spanish; all other languages fall back to English. Defaults to PSUICulture.</maml:para>
           </maml:description>
           <command:parameterValue required="true">string</command:parameterValue>
         </command:parameter>
         <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Quiet</maml:name>
-          <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+          <maml:name>Quiet</maml:name>
+          <maml:description>
             <maml:para>No questions, windows, UAC, or progress. Uses safe install defaults. Ambiguous selection or required elevation fails. Reset additionally requires Force.</maml:para>
           </maml:description>
         </command:parameter>
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
-      <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Path</maml:name>
-        <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+      <command:parameter required="false" position="0" pipelineInput="true (ByValue, ByPropertyName)" globbing="false">
+        <maml:name>Path</maml:name>
+        <maml:description>
           <maml:para>Absolute local managed installation root. The official payload stays in its VSO7 child to prevent upstream first-run relocation. Spaces and Unicode are supported. UNC, temporary, protected root, linked and shell-metacharacter paths are rejected. Never defaults to the working directory.</maml:para>
         </maml:description>
         <command:parameterValue required="true">string</command:parameterValue>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">string</maml:name>
+        <dev:type>
+          <maml:name>string</maml:name>
         </dev:type>
-        <dev:defaultValue xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">LOCALAPPDATA\Programs\VSO or ProgramFiles\VSO</dev:defaultValue>
+        <dev:defaultValue>LOCALAPPDATA\Programs\VSO or ProgramFiles\VSO</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Scope</maml:name>
-        <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+      <command:parameter required="false" position="1" pipelineInput="false" globbing="false">
+        <maml:name>Scope</maml:name>
+        <maml:description>
           <maml:para>CurrentUser or AllUsers. CurrentUser is the safe default in automation; interactive Install-VSO asks when scope and path were omitted.</maml:para>
         </maml:description>
         <command:parameterValue required="true">string</command:parameterValue>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">string</maml:name>
+        <dev:type>
+          <maml:name>string</maml:name>
         </dev:type>
-        <dev:defaultValue xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">CurrentUser in automation; interactive choice otherwise</dev:defaultValue>
+        <dev:defaultValue>CurrentUser in automation; interactive choice otherwise</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Version</maml:name>
-        <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+      <command:parameter required="false" position="2" pipelineInput="false" globbing="false">
+        <maml:name>Version</maml:name>
+        <maml:description>
           <maml:para>VSO release semantic version, with optional v prefix. Independent of this module version. Update -Force permits an explicit downgrade or reinstall.</maml:para>
         </maml:description>
         <command:parameterValue required="true">string</command:parameterValue>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">string</maml:name>
+        <dev:type>
+          <maml:name>string</maml:name>
         </dev:type>
-        <dev:defaultValue xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">Latest stable release for Install/Update; all matching versions for discovery</dev:defaultValue>
+        <dev:defaultValue>Latest stable release for Install/Update; all matching versions for discovery</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Language</maml:name>
-        <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+      <command:parameter required="false" position="3" pipelineInput="false" globbing="false">
+        <maml:name>Language</maml:name>
+        <maml:description>
           <maml:para>es, es-ES, en or en-US. Spanish culture variants use Spanish; all other languages fall back to English. Defaults to PSUICulture.</maml:para>
         </maml:description>
         <command:parameterValue required="true">string</command:parameterValue>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">string</maml:name>
+        <dev:type>
+          <maml:name>string</maml:name>
         </dev:type>
-        <dev:defaultValue xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">PSUICulture with explicit English fallback</dev:defaultValue>
+        <dev:defaultValue>PSUICulture with explicit English fallback</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Quiet</maml:name>
-        <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+        <maml:name>Quiet</maml:name>
+        <maml:description>
           <maml:para>No questions, windows, UAC, or progress. Uses safe install defaults. Ambiguous selection or required elevation fails. Reset additionally requires Force.</maml:para>
         </maml:description>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">switch</maml:name>
+        <dev:type>
+          <maml:name>switch</maml:name>
         </dev:type>
-        <dev:defaultValue xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">False</dev:defaultValue>
+        <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
     </command:parameters>
     <command:inputTypes>
       <command:inputType>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">None</maml:name>
+        <dev:type>
+          <maml:name>System.String, System.Management.Automation.PSObject (Path)</maml:name>
         </dev:type>
       </command:inputType>
     </command:inputTypes>
     <command:returnValues>
       <command:returnValue>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">System.Management.Automation.PSCustomObject</maml:name>
+        <dev:type>
+          <maml:name>System.Management.Automation.PSCustomObject</maml:name>
         </dev:type>
       </command:returnValue>
     </command:returnValues>
-    <command:alertSet>
-      <command:alert>
-        <maml:para xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Removing files does not undo Windows tweaks. Shared Recovery, unknown files and unowned data are preserved. CurrentUser needs access to its folder. AllUsers needs administrator permission. Start uses the official launcher and its own elevation. Targets Windows 11 x64, Windows PowerShell 5.1 and PowerShell 7.x. Live acceptance in both editions is required before publication.</maml:para>
-      </command:alert>
-    </command:alertSet>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Removing files does not undo Windows tweaks. Shared Recovery, unknown files and unowned data are preserved. CurrentUser needs access to its folder. AllUsers needs administrator permission. Start uses the official launcher and its own elevation. Targets Windows 11 x64, Windows PowerShell 5.1 and PowerShell 7.x. Live acceptance in both editions is required before publication.</maml:para>
+      </maml:alert>
+    </maml:alertSet>
     <command:examples>
       <command:example>
-        <maml:title xmlns:maml="http://schemas.microsoft.com/maml/2004/10">List</maml:title>
-        <dev:code xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">Get-VSOInstallation | Select-Object Version, Scope, Path, State</dev:code>
-        <dev:remarks xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:para xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Objects can be filtered and used in scripts.</maml:para>
+        <maml:title>---------------- EXAMPLE 1: List ----------------</maml:title>
+        <dev:code>Get-VSOInstallation | Select-Object Version, Scope, Path, State</dev:code>
+        <dev:remarks>
+          <maml:para>Objects can be filtered and used in scripts.</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
-        <maml:title xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Inspect a custom folder</maml:title>
-        <dev:code xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">Get-VSOInstallation -Path "D:\Programs\VSO" -Language es</dev:code>
-        <dev:remarks xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:para xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Read-only inspection.</maml:para>
+        <maml:title>---------------- EXAMPLE 2: Inspect a custom folder ----------------</maml:title>
+        <dev:code>Get-VSOInstallation -Path "D:\Programs\VSO" -Language es</dev:code>
+        <dev:remarks>
+          <maml:para>Read-only inspection.</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
-    <command:relatedLinks />
+    <maml:relatedLinks />
   </command:command>
-  <command:command xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10">
+  <command:command>
     <command:details>
       <command:name>Reset-VSO</command:name>
       <command:verb>Reset</command:verb>
       <command:noun>VSO</command:noun>
-      <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+      <maml:description>
         <maml:para>Remove owned application files while preserving Windows Recovery and unknown data.</maml:para>
       </maml:description>
     </command:details>
-    <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
-      <maml:para>Always preview with WhatIf and PassThru. Displays exact deletion and preservation lists. Normal reset removes unchanged application files and matching registration/receipt while preserving receipted persistent data. Full also removes unchanged receipted configuration, cache, logs, temporary files and attributable transaction metadata. Protected objects include explicit ownership reasons; shared or untracked data cannot be completely cleaned. Modified and foreign files survive. Full cannot attribute VSO7 shared ProgramData or untracked runtime data to one installation, so those are preserved. RemoveBackups plus AcknowledgeBackupLoss explicitly permits deletion of owned previous application copies. Quiet/non-interactive destructive execution requires Force. Uninstalling files does not reverse any Windows tweak. The Gallery module itself remains installed.</maml:para>
+    <maml:description>
+      <maml:para>Application and module removal are independent. Reset-VSO removes the application; Reset-VSO -Full includes additional attributable data. Uninstall-PSResource VSO removes the module, or use Uninstall-Module VSO for PowerShellGet. Neither action removes the other component. Always preview with WhatIf and PassThru. Displays exact deletion and preservation lists. Normal reset removes unchanged application files and matching registration/receipt while preserving receipted persistent data. Full also removes unchanged receipted configuration, cache, logs, temporary files and attributable transaction metadata. Protected objects include explicit ownership reasons; shared or untracked data cannot be completely cleaned. Modified and foreign files survive. Full cannot attribute VSO7 shared ProgramData or untracked runtime data to one installation, so those are preserved. RemoveBackups plus AcknowledgeBackupLoss explicitly permits deletion of owned previous application copies. Quiet/non-interactive destructive execution requires Force. Uninstalling files does not reverse any Windows tweak. The Gallery module itself remains installed.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Reset-VSO</maml:name>
-        <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Path</maml:name>
-          <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+        <maml:name>Reset-VSO</maml:name>
+        <command:parameter required="false" position="0" pipelineInput="false" globbing="false">
+          <maml:name>Path</maml:name>
+          <maml:description>
             <maml:para>Absolute local managed installation root. The official payload stays in its VSO7 child to prevent upstream first-run relocation. Spaces and Unicode are supported. UNC, temporary, protected root, linked and shell-metacharacter paths are rejected. Never defaults to the working directory.</maml:para>
           </maml:description>
           <command:parameterValue required="true">string</command:parameterValue>
         </command:parameter>
-        <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Version</maml:name>
-          <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+        <command:parameter required="false" position="1" pipelineInput="false" globbing="false">
+          <maml:name>Version</maml:name>
+          <maml:description>
             <maml:para>VSO release semantic version, with optional v prefix. Independent of this module version. Update -Force permits an explicit downgrade or reinstall.</maml:para>
           </maml:description>
           <command:parameterValue required="true">string</command:parameterValue>
         </command:parameter>
         <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Full</maml:name>
-          <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+          <maml:name>Full</maml:name>
+          <maml:description>
             <maml:para>Also removes unchanged receipted configuration, cache, logs, temporary data and safely attributable manager transaction metadata. Shared VSO7 state and runtime files without ownership evidence remain preserved. Does not undo Windows tweaks or uninstall this module.</maml:para>
           </maml:description>
         </command:parameter>
         <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">RemoveBackups</maml:name>
-          <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+          <maml:name>RemoveBackups</maml:name>
+          <maml:description>
             <maml:para>Also removes unchanged owned application files in previous manager transaction copies. Requires Full and AcknowledgeBackupLoss. Unknown backup files and shared Recovery remain preserved.</maml:para>
           </maml:description>
         </command:parameter>
         <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">AcknowledgeBackupLoss</maml:name>
-          <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+          <maml:name>AcknowledgeBackupLoss</maml:name>
+          <maml:description>
             <maml:para>Explicitly acknowledges loss of previous application copies. Required with RemoveBackups, including automation.</maml:para>
           </maml:description>
         </command:parameter>
         <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Force</maml:name>
-          <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+          <maml:name>Force</maml:name>
+          <maml:description>
             <maml:para>Suppresses default confirmation when Confirm was not explicitly set. Permits a verified reinstall or downgrade. For Stop, explicitly permits forced termination. Never bypasses safety checks.</maml:para>
           </maml:description>
         </command:parameter>
         <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Quiet</maml:name>
-          <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+          <maml:name>Quiet</maml:name>
+          <maml:description>
             <maml:para>No questions, windows, UAC, or progress. Uses safe install defaults. Ambiguous selection or required elevation fails. Reset additionally requires Force.</maml:para>
           </maml:description>
         </command:parameter>
-        <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Language</maml:name>
-          <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+        <command:parameter required="false" position="2" pipelineInput="false" globbing="false">
+          <maml:name>Language</maml:name>
+          <maml:description>
             <maml:para>es, es-ES, en or en-US. Spanish culture variants use Spanish; all other languages fall back to English. Defaults to PSUICulture.</maml:para>
           </maml:description>
           <command:parameterValue required="true">string</command:parameterValue>
         </command:parameter>
         <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">PassThru</maml:name>
-          <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+          <maml:name>PassThru</maml:name>
+          <maml:description>
             <maml:para>Returns a structured operation result or Help-VSO metadata. Reset -WhatIf -PassThru returns the exact removal plan.</maml:para>
+          </maml:description>
+        </command:parameter>
+        <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
+          <maml:name>WhatIf</maml:name>
+          <maml:description>
+            <maml:para>Shows the intended operation without downloads, file changes, process termination or elevation.</maml:para>
+          </maml:description>
+        </command:parameter>
+        <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
+          <maml:name>Confirm</maml:name>
+          <maml:description>
+            <maml:para>Requests confirmation through PowerShell ShouldProcess. Explicit confirmation is honored; cannot be combined with Quiet.</maml:para>
           </maml:description>
         </command:parameter>
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
-      <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Path</maml:name>
-        <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+      <command:parameter required="false" position="0" pipelineInput="false" globbing="false">
+        <maml:name>Path</maml:name>
+        <maml:description>
           <maml:para>Absolute local managed installation root. The official payload stays in its VSO7 child to prevent upstream first-run relocation. Spaces and Unicode are supported. UNC, temporary, protected root, linked and shell-metacharacter paths are rejected. Never defaults to the working directory.</maml:para>
         </maml:description>
         <command:parameterValue required="true">string</command:parameterValue>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">string</maml:name>
+        <dev:type>
+          <maml:name>string</maml:name>
         </dev:type>
-        <dev:defaultValue xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">LOCALAPPDATA\Programs\VSO or ProgramFiles\VSO</dev:defaultValue>
+        <dev:defaultValue>LOCALAPPDATA\Programs\VSO or ProgramFiles\VSO</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Version</maml:name>
-        <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+      <command:parameter required="false" position="1" pipelineInput="false" globbing="false">
+        <maml:name>Version</maml:name>
+        <maml:description>
           <maml:para>VSO release semantic version, with optional v prefix. Independent of this module version. Update -Force permits an explicit downgrade or reinstall.</maml:para>
         </maml:description>
         <command:parameterValue required="true">string</command:parameterValue>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">string</maml:name>
+        <dev:type>
+          <maml:name>string</maml:name>
         </dev:type>
-        <dev:defaultValue xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">Latest stable release for Install/Update; all matching versions for discovery</dev:defaultValue>
+        <dev:defaultValue>Latest stable release for Install/Update; all matching versions for discovery</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Full</maml:name>
-        <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+        <maml:name>Full</maml:name>
+        <maml:description>
           <maml:para>Also removes unchanged receipted configuration, cache, logs, temporary data and safely attributable manager transaction metadata. Shared VSO7 state and runtime files without ownership evidence remain preserved. Does not undo Windows tweaks or uninstall this module.</maml:para>
         </maml:description>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">switch</maml:name>
+        <dev:type>
+          <maml:name>switch</maml:name>
         </dev:type>
-        <dev:defaultValue xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">False</dev:defaultValue>
+        <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">RemoveBackups</maml:name>
-        <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+        <maml:name>RemoveBackups</maml:name>
+        <maml:description>
           <maml:para>Also removes unchanged owned application files in previous manager transaction copies. Requires Full and AcknowledgeBackupLoss. Unknown backup files and shared Recovery remain preserved.</maml:para>
         </maml:description>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">switch</maml:name>
+        <dev:type>
+          <maml:name>switch</maml:name>
         </dev:type>
-        <dev:defaultValue xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">False</dev:defaultValue>
+        <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">AcknowledgeBackupLoss</maml:name>
-        <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+        <maml:name>AcknowledgeBackupLoss</maml:name>
+        <maml:description>
           <maml:para>Explicitly acknowledges loss of previous application copies. Required with RemoveBackups, including automation.</maml:para>
         </maml:description>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">switch</maml:name>
+        <dev:type>
+          <maml:name>switch</maml:name>
         </dev:type>
-        <dev:defaultValue xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">False</dev:defaultValue>
+        <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Force</maml:name>
-        <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+        <maml:name>Force</maml:name>
+        <maml:description>
           <maml:para>Suppresses default confirmation when Confirm was not explicitly set. Permits a verified reinstall or downgrade. For Stop, explicitly permits forced termination. Never bypasses safety checks.</maml:para>
         </maml:description>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">switch</maml:name>
+        <dev:type>
+          <maml:name>switch</maml:name>
         </dev:type>
-        <dev:defaultValue xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">False</dev:defaultValue>
+        <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Quiet</maml:name>
-        <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+        <maml:name>Quiet</maml:name>
+        <maml:description>
           <maml:para>No questions, windows, UAC, or progress. Uses safe install defaults. Ambiguous selection or required elevation fails. Reset additionally requires Force.</maml:para>
         </maml:description>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">switch</maml:name>
+        <dev:type>
+          <maml:name>switch</maml:name>
         </dev:type>
-        <dev:defaultValue xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">False</dev:defaultValue>
+        <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Language</maml:name>
-        <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+      <command:parameter required="false" position="2" pipelineInput="false" globbing="false">
+        <maml:name>Language</maml:name>
+        <maml:description>
           <maml:para>es, es-ES, en or en-US. Spanish culture variants use Spanish; all other languages fall back to English. Defaults to PSUICulture.</maml:para>
         </maml:description>
         <command:parameterValue required="true">string</command:parameterValue>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">string</maml:name>
+        <dev:type>
+          <maml:name>string</maml:name>
         </dev:type>
-        <dev:defaultValue xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">PSUICulture with explicit English fallback</dev:defaultValue>
+        <dev:defaultValue>PSUICulture with explicit English fallback</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">PassThru</maml:name>
-        <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+        <maml:name>PassThru</maml:name>
+        <maml:description>
           <maml:para>Returns a structured operation result or Help-VSO metadata. Reset -WhatIf -PassThru returns the exact removal plan.</maml:para>
         </maml:description>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">switch</maml:name>
+        <dev:type>
+          <maml:name>switch</maml:name>
         </dev:type>
-        <dev:defaultValue xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">False</dev:defaultValue>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
+        <maml:name>WhatIf</maml:name>
+        <maml:description>
+          <maml:para>Shows the intended operation without downloads, file changes, process termination or elevation.</maml:para>
+        </maml:description>
+        <dev:type>
+          <maml:name>switch</maml:name>
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
+        <maml:name>Confirm</maml:name>
+        <maml:description>
+          <maml:para>Requests confirmation through PowerShell ShouldProcess. Explicit confirmation is honored; cannot be combined with Quiet.</maml:para>
+        </maml:description>
+        <dev:type>
+          <maml:name>switch</maml:name>
+        </dev:type>
+        <dev:defaultValue>ConfirmPreference</dev:defaultValue>
       </command:parameter>
     </command:parameters>
     <command:inputTypes>
       <command:inputType>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">None</maml:name>
+        <dev:type>
+          <maml:name>None</maml:name>
         </dev:type>
       </command:inputType>
     </command:inputTypes>
     <command:returnValues>
       <command:returnValue>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">System.Management.Automation.PSCustomObject</maml:name>
+        <dev:type>
+          <maml:name>System.Management.Automation.PSCustomObject</maml:name>
         </dev:type>
       </command:returnValue>
     </command:returnValues>
-    <command:alertSet>
-      <command:alert>
-        <maml:para xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Removing files does not undo Windows tweaks. Shared Recovery, unknown files and unowned data are preserved. CurrentUser needs access to its folder. AllUsers needs administrator permission. Start uses the official launcher and its own elevation. Targets Windows 11 x64, Windows PowerShell 5.1 and PowerShell 7.x. Live acceptance in both editions is required before publication.</maml:para>
-      </command:alert>
-    </command:alertSet>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Removing files does not undo Windows tweaks. Shared Recovery, unknown files and unowned data are preserved. CurrentUser needs access to its folder. AllUsers needs administrator permission. Start uses the official launcher and its own elevation. Targets Windows 11 x64, Windows PowerShell 5.1 and PowerShell 7.x. Live acceptance in both editions is required before publication.</maml:para>
+      </maml:alert>
+      <maml:alert>
+        <maml:para>Application: Reset-VSO (or Reset-VSO -Full for deeper owned-file removal). Module: Uninstall-PSResource VSO, or Uninstall-Module VSO for PowerShellGet. Reset-VSO keeps the module; removing the module keeps the application.</maml:para>
+      </maml:alert>
+    </maml:alertSet>
     <command:examples>
       <command:example>
-        <maml:title xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Inspect exact plan</maml:title>
-        <dev:code xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">Reset-VSO -Path "D:\Programs\VSO" -Full -WhatIf -PassThru</dev:code>
-        <dev:remarks xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:para xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Review Remove, Preserve and Protected (reason and ownership).</maml:para>
+        <maml:title>---------------- EXAMPLE 1: Inspect exact plan ----------------</maml:title>
+        <dev:code>Reset-VSO -Path "D:\Programs\VSO" -Full -WhatIf -PassThru</dev:code>
+        <dev:remarks>
+          <maml:para>Review Remove, Preserve and Protected (reason and ownership).</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
-        <maml:title xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Remove application</maml:title>
-        <dev:code xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">Reset-VSO -Path "D:\Programs\VSO" -Quiet -Force -PassThru</dev:code>
-        <dev:remarks xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:para xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Preserves shared Recovery and files without ownership proof.</maml:para>
+        <maml:title>---------------- EXAMPLE 2: Remove application ----------------</maml:title>
+        <dev:code>Reset-VSO -Path "D:\Programs\VSO" -Quiet -Force -PassThru</dev:code>
+        <dev:remarks>
+          <maml:para>Preserves shared Recovery and files without ownership proof.</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
-        <maml:title xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Explicit manager backup removal</maml:title>
-        <dev:code xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">Reset-VSO -Full -RemoveBackups -AcknowledgeBackupLoss -Confirm</dev:code>
-        <dev:remarks xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:para xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Also removes attributable previous application files, preserving unknown content.</maml:para>
+        <maml:title>---------------- EXAMPLE 3: Explicit manager backup removal ----------------</maml:title>
+        <dev:code>Reset-VSO -Full -RemoveBackups -AcknowledgeBackupLoss -Confirm</dev:code>
+        <dev:remarks>
+          <maml:para>Also removes attributable previous application files, preserving unknown content.</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>---------------- EXAMPLE 4: Remove the PowerShell module ----------------</maml:title>
+        <dev:code>Uninstall-PSResource VSO</dev:code>
+        <dev:remarks>
+          <maml:para>For PowerShellGet use Uninstall-Module VSO. The application is retained. Close sessions that have imported the module before uninstalling it.</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
-    <command:relatedLinks />
+    <maml:relatedLinks />
   </command:command>
-  <command:command xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10">
+  <command:command>
     <command:details>
       <command:name>Help-VSO</command:name>
       <command:verb>Help</command:verb>
       <command:noun>VSO</command:noun>
-      <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+      <maml:description>
         <maml:para>Show localized help, syntax, parameters and examples.</maml:para>
       </maml:description>
     </command:details>
-    <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
-      <maml:para>Selects Spanish for Spanish UI cultures and English for all others. Language overrides this decision for Help-VSO. Native Get-Help uses generated localized external MAML in en-US and es-ES, with an English root fallback; Get-Help uses the session UI culture, not this command Language parameter. All help is generated from the same structured descriptions.</maml:para>
+    <maml:description>
+      <maml:para>The overview also explains application/module removal. Examples requires Command. Get-Help -Full displays examples after NOTES without a separate general examples heading; numbered example titles distinguish them. Get-Help -Examples selects the structured examples only. Selects Spanish for Spanish UI cultures and English for all others. Language overrides this decision for Help-VSO. Native Get-Help uses generated localized external MAML in en-US and es-ES, with an English root fallback; Get-Help uses the session UI culture, not this command Language parameter. All help is generated from the same structured descriptions.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Help-VSO</maml:name>
-        <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Command</maml:name>
-          <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+        <maml:name>Help-VSO</maml:name>
+        <command:parameter required="false" position="0" pipelineInput="false" globbing="false">
+          <maml:name>Command</maml:name>
+          <maml:description>
             <maml:para>Public command to describe. Omit to list all eight commands.</maml:para>
           </maml:description>
           <command:parameterValue required="true">string</command:parameterValue>
         </command:parameter>
         <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Examples</maml:name>
-          <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+          <maml:name>Examples</maml:name>
+          <maml:description>
             <maml:para>Show examples for the selected command.</maml:para>
           </maml:description>
         </command:parameter>
-        <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Language</maml:name>
-          <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+        <command:parameter required="false" position="1" pipelineInput="false" globbing="false">
+          <maml:name>Language</maml:name>
+          <maml:description>
             <maml:para>es, es-ES, en or en-US. Spanish culture variants use Spanish; all other languages fall back to English. Defaults to PSUICulture.</maml:para>
           </maml:description>
           <command:parameterValue required="true">string</command:parameterValue>
         </command:parameter>
         <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">PassThru</maml:name>
-          <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+          <maml:name>PassThru</maml:name>
+          <maml:description>
             <maml:para>Returns a structured operation result or Help-VSO metadata. Reset -WhatIf -PassThru returns the exact removal plan.</maml:para>
           </maml:description>
         </command:parameter>
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
-      <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Command</maml:name>
-        <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+      <command:parameter required="false" position="0" pipelineInput="false" globbing="false">
+        <maml:name>Command</maml:name>
+        <maml:description>
           <maml:para>Public command to describe. Omit to list all eight commands.</maml:para>
         </maml:description>
         <command:parameterValue required="true">string</command:parameterValue>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">string</maml:name>
+        <dev:type>
+          <maml:name>string</maml:name>
         </dev:type>
-        <dev:defaultValue xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10"></dev:defaultValue>
+        <dev:defaultValue></dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Examples</maml:name>
-        <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+        <maml:name>Examples</maml:name>
+        <maml:description>
           <maml:para>Show examples for the selected command.</maml:para>
         </maml:description>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">switch</maml:name>
+        <dev:type>
+          <maml:name>switch</maml:name>
         </dev:type>
-        <dev:defaultValue xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">False</dev:defaultValue>
+        <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Language</maml:name>
-        <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+      <command:parameter required="false" position="1" pipelineInput="false" globbing="false">
+        <maml:name>Language</maml:name>
+        <maml:description>
           <maml:para>es, es-ES, en or en-US. Spanish culture variants use Spanish; all other languages fall back to English. Defaults to PSUICulture.</maml:para>
         </maml:description>
         <command:parameterValue required="true">string</command:parameterValue>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">string</maml:name>
+        <dev:type>
+          <maml:name>string</maml:name>
         </dev:type>
-        <dev:defaultValue xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">PSUICulture with explicit English fallback</dev:defaultValue>
+        <dev:defaultValue>PSUICulture with explicit English fallback</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" position="named" pipelineInput="false" globbing="false">
-        <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">PassThru</maml:name>
-        <maml:description xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+        <maml:name>PassThru</maml:name>
+        <maml:description>
           <maml:para>Returns a structured operation result or Help-VSO metadata. Reset -WhatIf -PassThru returns the exact removal plan.</maml:para>
         </maml:description>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">switch</maml:name>
+        <dev:type>
+          <maml:name>switch</maml:name>
         </dev:type>
-        <dev:defaultValue xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">False</dev:defaultValue>
+        <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
     </command:parameters>
     <command:inputTypes>
       <command:inputType>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">None</maml:name>
+        <dev:type>
+          <maml:name>None</maml:name>
         </dev:type>
       </command:inputType>
     </command:inputTypes>
     <command:returnValues>
       <command:returnValue>
-        <dev:type xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:name xmlns:maml="http://schemas.microsoft.com/maml/2004/10">System.Management.Automation.PSCustomObject</maml:name>
+        <dev:type>
+          <maml:name>System.Management.Automation.PSCustomObject</maml:name>
         </dev:type>
       </command:returnValue>
     </command:returnValues>
-    <command:alertSet>
-      <command:alert>
-        <maml:para xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Removing files does not undo Windows tweaks. Shared Recovery, unknown files and unowned data are preserved. CurrentUser needs access to its folder. AllUsers needs administrator permission. Start uses the official launcher and its own elevation. Targets Windows 11 x64, Windows PowerShell 5.1 and PowerShell 7.x. Live acceptance in both editions is required before publication.</maml:para>
-      </command:alert>
-    </command:alertSet>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Removing files does not undo Windows tweaks. Shared Recovery, unknown files and unowned data are preserved. CurrentUser needs access to its folder. AllUsers needs administrator permission. Start uses the official launcher and its own elevation. Targets Windows 11 x64, Windows PowerShell 5.1 and PowerShell 7.x. Live acceptance in both editions is required before publication.</maml:para>
+      </maml:alert>
+      <maml:alert>
+        <maml:para>Application: Reset-VSO (or Reset-VSO -Full for deeper owned-file removal). Module: Uninstall-PSResource VSO, or Uninstall-Module VSO for PowerShellGet. Reset-VSO keeps the module; removing the module keeps the application.</maml:para>
+      </maml:alert>
+    </maml:alertSet>
     <command:examples>
       <command:example>
-        <maml:title xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Spanish help</maml:title>
-        <dev:code xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">Help-VSO -Command Install-VSO -Language es</dev:code>
-        <dev:remarks xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:para xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Explicit language override.</maml:para>
+        <maml:title>---------------- EXAMPLE 1: Spanish help ----------------</maml:title>
+        <dev:code>Help-VSO -Command Install-VSO -Language es</dev:code>
+        <dev:remarks>
+          <maml:para>Explicit language override.</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
-        <maml:title xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Native help</maml:title>
-        <dev:code xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">Get-Help Reset-VSO -Full</dev:code>
-        <dev:remarks xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-          <maml:para xmlns:maml="http://schemas.microsoft.com/maml/2004/10">Uses the native PowerShell help culture selection.</maml:para>
+        <maml:title>---------------- EXAMPLE 2: Native help ----------------</maml:title>
+        <dev:code>Get-Help Reset-VSO -Full</dev:code>
+        <dev:remarks>
+          <maml:para>Uses the native PowerShell help culture selection.</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
-    <command:relatedLinks />
+    <maml:relatedLinks />
   </command:command>
 </helpItems>

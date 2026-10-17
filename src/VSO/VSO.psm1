@@ -2,7 +2,7 @@
 $script:ModuleRoot = $PSScriptRoot
 $script:PublicCommands = @('Install-VSO','Start-VSO','Stop-VSO','Update-VSO','Get-VSOStatus','Get-VSOInstallation','Reset-VSO','Help-VSO')
 $parts=@('Utilities/Common','Localization/Context','UI/Prompt','Security/Paths','Security/Archive','GitHub/Release','Installation/Distribution','Installation/Registry','Installation/Transaction','Processes/Processes','Security/Elevation')
-$script:RuntimeFiles=@('VSO.psd1','VSO.psm1','en-US/Messages.psd1','es-ES/Messages.psd1','en-US/Help.psd1','es-ES/Help.psd1')
+$script:RuntimeFiles=@('VSO.psd1','VSO.psm1','VSO.format.ps1xml','en-US/Messages.psd1','es-ES/Messages.psd1','en-US/Help.psd1','es-ES/Help.psd1')
 $script:RuntimeFiles+=@($parts|ForEach-Object { 'Private/'+$_+'.ps1' })
 $script:RuntimeFiles+=@($script:PublicCommands|ForEach-Object { 'Public/'+$_+'.ps1' })
 $script:RuntimeHashes=[ordered]@{}

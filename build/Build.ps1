@@ -16,7 +16,7 @@ foreach ($file in @(Get-ChildItem -LiteralPath $root -Recurse -File | Where-Obje
 }
 $null=Test-ModuleManifest -Path $manifestPath -ErrorAction Stop
 $expected=@('Install-VSO','Start-VSO','Stop-VSO','Update-VSO','Get-VSOStatus','Get-VSOInstallation','Reset-VSO','Help-VSO')
-if (@(Compare-Object $expected $data.FunctionsToExport).Count -or $data.Author -cne 'saturnus25' -or $data.CompanyName -cne 'saturnus25' -or $data.ModuleVersion -ne '1.0.1') { throw 'Invalid module contract.' }
+if (@(Compare-Object $expected $data.FunctionsToExport).Count -or $data.Author -cne 'saturnus25' -or $data.CompanyName -cne 'saturnus25' -or $data.ModuleVersion -ne '1.0.2') { throw 'Invalid module contract.' }
 & (Join-Path $PSScriptRoot 'Build-Help.ps1') -ModulePath $source
 $null=& (Join-Path $PSScriptRoot 'Test-Privacy.ps1') -Path $root
 $dist=Join-Path $root 'dist'; [void][IO.Directory]::CreateDirectory($dist)

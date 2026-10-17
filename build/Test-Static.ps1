@@ -44,8 +44,11 @@ foreach ($culture in @('en-US','es-ES')) {
         if(-not$xmlCommand){throw 'Missing MAML command.'}
         $xmlNames=@($xmlCommand.SelectNodes('*[local-name()="parameters"]/*[local-name()="parameter"]/*[local-name()="name"]')|ForEach-Object InnerText)
         $parameterNames=@($function.Body.ParamBlock.Parameters|ForEach-Object {$_.Name.VariablePath.UserPath})
+        if ($name -in @('Install-VSO','Start-VSO','Stop-VSO','Update-VSO','Reset-VSO')) { $parameterNames+=@('WhatIf','Confirm') }
         if(@(Compare-Object $parameterNames $xmlNames).Count){throw ('MAML parameter mismatch: '+$name)}
         if (-not $help[$name].Synopsis -or -not $help[$name].Description -or -not $help[$name].Examples.Count) {throw 'Incomplete structured help.'}
+        $examples=@($xmlCommand.SelectNodes('*[local-name()="examples"]/*[local-name()="example"]'))
+        if ($examples.Count -ne $help[$name].Examples.Count -or $xmlCommand.SelectNodes('*[local-name()="alertSet"]//*[local-name()="example"]').Count) {throw 'Invalid native example structure.'}
     }
     # Every literal localization key used by an error/progress helper must exist.
     foreach ($source in $asts) {

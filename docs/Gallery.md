@@ -1,6 +1,6 @@
 # VSO PowerShell Module
 
-Official installation and lifecycle manager for [Vico Safe Optimizer](https://github.com/saturnus25/VSO), maintained by **saturnus25**. The PowerShell module is named **VSO**; module version **1.0.1** is independent of the application's version. It downloads official release assets instead of bundling the optimizer.
+Official installation and lifecycle manager for [Vico Safe Optimizer](https://github.com/saturnus25/VSO), maintained by **saturnus25**. The PowerShell module is named **VSO**; module version **1.0.2** is independent of the application's version. It downloads official release assets instead of bundling the optimizer.
 
 ## Installation
 
@@ -18,7 +18,7 @@ Install-Module VSO
 Install-VSO
 ```
 
-Gallery availability and exact package acceptance are recorded in the GitHub release. See [validation](https://github.com/saturnus25/VSO-PowerShell-Module/blob/v1.0.1/VALIDATION.md) for tested environments and limits.
+Gallery availability and exact package acceptance are recorded in the GitHub release. See [validation](https://github.com/saturnus25/VSO-PowerShell-Module/blob/v1.0.2/VALIDATION.md) for tested environments and limits.
 
 ## Commands
 
@@ -46,16 +46,32 @@ Reset-VSO -WhatIf
 
 CurrentUser is the default and uses `$env:LOCALAPPDATA\Programs\VSO`. AllUsers uses `$env:ProgramFiles\VSO` and requests UAC when necessary. An explicit `Path` selects a custom managed folder; the official payload remains in its `VSO7` child. Native choices and folder selection are interactive. `-Quiet` suppresses prompts and elevation; unresolved choices or permissions produce errors. English and Spanish messages and help are included; `-Language en` or `-Language es` overrides automatic selection. Mutating commands support `-WhatIf` and `-Confirm`.
 
-`Reset-VSO` preserves unknown or modified data. `-Full` also considers provably owned declared data; backups additionally require `-RemoveBackups -AcknowledgeBackupLoss`. Shared VSO Recovery and untracked files remain protected. Removing the application never restores Windows tweaks, and does not uninstall the PowerShell module. See [usage](https://github.com/saturnus25/VSO-PowerShell-Module/blob/v1.0.1/docs/Usage.md) and [removal](https://github.com/saturnus25/VSO-PowerShell-Module/blob/v1.0.1/docs/Removal.md) for details.
+`Reset-VSO` preserves unknown or modified data. `-Full` also considers provably owned declared data; backups additionally require `-RemoveBackups -AcknowledgeBackupLoss`. Shared VSO Recovery and untracked files remain protected. Removing the application never restores Windows tweaks, and does not uninstall the PowerShell module. See [usage](https://github.com/saturnus25/VSO-PowerShell-Module/blob/v1.0.2/docs/Usage.md) and [removal](https://github.com/saturnus25/VSO-PowerShell-Module/blob/v1.0.2/docs/Removal.md) for details.
+
+Application and module removal are independent:
+
+```powershell
+Reset-VSO
+# Or, to consider additional attributable application data:
+Reset-VSO -Full
+# To remove the module installed with PSResourceGet:
+Uninstall-PSResource VSO
+# For PowerShellGet instead:
+Uninstall-Module VSO
+```
+
+Reset-VSO keeps the module; uninstalling the module keeps the application. Close importing sessions before removing the module.
+
+Get-VSOStatus returns a structured NotInstalled summary when nothing matches; its default presentation is localized and its raw properties remain suitable for scripts. Get-VSOInstallation returns an empty collection when there are no candidates. Use Help-VSO for discovery and Get-Help Install-VSO -Examples for numbered native examples.
 
 ## Requirements and compatibility
 
 Windows 11 x64, a 64-bit Windows PowerShell 5.1 or PowerShell 7 session, and network access to the official GitHub releases for installation and updates. The existing platform guard excludes Windows 10, Windows Server and ARM64. Six official VSO7 releases, 1.0.0 through 1.2.2, have isolated Windows acceptance evidence. VSO8 has no execution adapter and is not supported by this release.
 
-The module does not apply tweaks, change stored execution policies or send telemetry. The official application and pinned UAC helper use process-scoped execution-policy arguments. Starting VSO delegates to its own launcher and safety gates. See [architecture](https://github.com/saturnus25/VSO-PowerShell-Module/blob/v1.0.1/docs/Architecture.md), [security](https://github.com/saturnus25/VSO-PowerShell-Module/blob/v1.0.1/docs/Security.md), [privacy](https://github.com/saturnus25/VSO-PowerShell-Module/blob/v1.0.1/docs/Privacy.md) and [distribution contracts](https://github.com/saturnus25/VSO-PowerShell-Module/blob/v1.0.1/docs/Distribution.md).
+The module does not apply tweaks, change stored execution policies or send telemetry. The official application and pinned UAC helper use process-scoped execution-policy arguments. Starting VSO delegates to its own launcher and safety gates. See [architecture](https://github.com/saturnus25/VSO-PowerShell-Module/blob/v1.0.2/docs/Architecture.md), [security](https://github.com/saturnus25/VSO-PowerShell-Module/blob/v1.0.2/docs/Security.md), [privacy](https://github.com/saturnus25/VSO-PowerShell-Module/blob/v1.0.2/docs/Privacy.md) and [distribution contracts](https://github.com/saturnus25/VSO-PowerShell-Module/blob/v1.0.2/docs/Distribution.md).
 
 ## License
 
-The module uses the [VSO PowerShell Module Source-Available License 1.0](https://github.com/saturnus25/VSO-PowerShell-Module/blob/v1.0.1/LICENSE). It is free to view, study, install and run for personal or professional use. Exact unmodified copies may be shared with attribution. General modification, modified redistribution, derivative projects and rebranding require separate permission, subject to platform and legal exceptions in the license. This is **source available**, not OSI-approved open source. [License rationale](https://github.com/saturnus25/VSO-PowerShell-Module/blob/v1.0.1/docs/License-Rationale.md) explains the platform exceptions.
+The module uses the [VSO PowerShell Module Source-Available License 1.0](https://github.com/saturnus25/VSO-PowerShell-Module/blob/v1.0.2/LICENSE). It is free to view, study, install and run for personal or professional use. Exact unmodified copies may be shared with attribution. General modification, modified redistribution, derivative projects and rebranding require separate permission, subject to platform and legal exceptions in the license. This is **source available**, not OSI-approved open source. [License rationale](https://github.com/saturnus25/VSO-PowerShell-Module/blob/v1.0.2/docs/License-Rationale.md) explains the platform exceptions.
 
 The separate [Vico Safe Optimizer application](https://github.com/saturnus25/VSO) retains its own MIT license; its third-party components retain their respective licenses. The module license does not replace them.

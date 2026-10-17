@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.2
+
+- Return an explicit structured NotInstalled query summary from Get-VSOStatus when no installations match. Keep raw states, nulls and Boolean activity separate from localized native formatting, including unknown visibility and filtered-query wording.
+- Preserve empty collection semantics for Get-VSOInstallation; support pipeline paths on both query commands and validate version filters even when discovery is empty. Preserve index access failures instead of silently reporting an empty index.
+- Use numbered English/Spanish native examples. Get-Help already stored examples separately; its Full renderer displays them after NOTES without a general examples heading. Correct MAML namespaces, positional/pipeline metadata and missing WhatIf/Confirm syntax; generate from AST without importing runtime during builds.
+- Make Help-VSO syntax include the command name, keep overview descriptions wrapped, explain independent application/module removal and reject Examples without Command with a localized actionable error.
+- Add focused regression coverage; retain the existing installation/update/launch/removal implementations, source-available license and immutable published packages. Prepare locally for owner review; no publication is performed by this iteration.
+
 ## 1.0.1
 
 - Shortened the package description and used canonical PowerShell capitalization in the packaged installation examples.

@@ -91,7 +91,10 @@ function Test-VSOInstalledFiles {
 function Get-VSOIndexEntries {
     param([string]$Scope,$Context)
     $root=Get-VSORegistryRoot $Scope $Context
-    if (-not [IO.Directory]::Exists($root)) { return }
+    # Directory.Exists suppresses access errors and would look like an empty index.
+    try { $directory=Get-Item -LiteralPath $root -Force -ErrorAction Stop }
+    catch [Management.Automation.ItemNotFoundException] { return }
+    if (-not $directory.PSIsContainer) { Throw-VSOError $Context Metadata @('index directory') }
     Assert-VSONoReparse $root $Context
     Assert-VSOProtectedDirectory $root $Context -UserAllowed:($Scope -eq 'CurrentUser')
     foreach ($file in @(Get-ChildItem -LiteralPath $root -Filter '*.json' -File -Force -ErrorAction Stop)) {
@@ -118,14 +121,21 @@ function Get-VSOInstallationsInternal {
         foreach ($scopeName in $scopes) {
             foreach ($entry in @(Get-VSOIndexEntries $scopeName $Context)) { $candidates.Add($entry) }
             $default=Get-VSODefaultPath $scopeName $Context
-            if ([IO.Directory]::Exists($default)) { $candidates.Add([pscustomobject]@{ Path=$default; Index=$null; Scope=$scopeName }) }
+            $directory=$null
+            try { $directory=Get-Item -LiteralPath $default -Force -ErrorAction Stop }
+            catch [Management.Automation.ItemNotFoundException] { }
+            if ($directory -and $directory.PSIsContainer) { $candidates.Add([pscustomobject]@{ Path=$default; Index=$null; Scope=$scopeName }) }
         }
     }
     foreach ($candidate in $candidates) {
         if (-not $seen.Add($candidate.Path)) { continue }
         $record=[ordered]@{ PSTypeName='VSO.Installation'; Id=$(if ($candidate.Index) { $candidate.Index.Id } else { $null }); Version='Unknown'; Generation='7'; Path=$candidate.Path; ApplicationPath=(Join-Path $candidate.Path 'VSO7'); Scope=$candidate.Scope; Managed=($null -ne $candidate.Index); State='Missing'; StateDisplay=$Context.Text.Missing; Launcher=$null; Receipt=$null; Diagnostic=$null }
-        if ([IO.Directory]::Exists($candidate.Path)) {
+        $directory=$null
+        try { $directory=Get-Item -LiteralPath $candidate.Path -Force -ErrorAction Stop }
+        catch [Management.Automation.ItemNotFoundException] { }
+        if ($directory) {
             try {
+                if (-not $directory.PSIsContainer) { Throw-VSOError $Context Metadata @('installation directory') }
                 $marker=Join-VSOChild $candidate.Path '.vso-manager.json' $Context
                 if ([IO.File]::Exists($marker)) {
                     $receipt=Read-VSOReceipt $candidate.Path $Context
