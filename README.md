@@ -1,87 +1,273 @@
 # VSO PowerShell Module
 
-Official installation and lifecycle manager for [Vico Safe Optimizer](https://github.com/saturnus25/VSO), maintained by **saturnus25**. The PowerShell module is named **VSO**; module version **1.0.2** is independent of the application's version. It downloads official release assets instead of bundling the optimizer.
+**The official PowerShell installation and lifecycle manager for [Vico Safe Optimizer](https://github.com/saturnus25/VSO).**
+
+[PowerShell Gallery](https://www.powershellgallery.com/packages/VSO) · [Main Project](https://github.com/saturnus25/VSO) · [Documentation](docs/Usage.md) · [License](LICENSE)
+
+VSO PowerShell Module provides a simple, secure and automated way to install, launch, update and remove Vico Safe Optimizer directly from PowerShell.
+
+The module is maintained by **saturnus25** and distributed independently of the application. It downloads and verifies official GitHub release assets rather than bundling the optimizer.
+
+**Current module version:** `1.0.2`
+
+> Module versions and Vico Safe Optimizer application versions are maintained independently.
+
+---
 
 ## Installation
 
-PowerShell with PSResourceGet:
+### Recommended — PSResourceGet
 
 ```powershell
 Install-PSResource VSO
 Install-VSO
 ```
 
-The first command installs the module. The second opens the native VSO installation wizard. Windows PowerShell 5.1 with PowerShellGet:
+The first command installs the PowerShell module. The second launches VSO's interactive installation wizard.
+
+### Alternative — Windows PowerShell 5.1
+
+For systems using PowerShellGet:
 
 ```powershell
 Install-Module VSO
 Install-VSO
 ```
 
-Gallery availability and exact package acceptance are recorded in the GitHub release. See [validation](VALIDATION.md) for tested environments and limits. To review a source checkout in an isolated environment, build with `build/Build.ps1 -Package`, then import `dist/VSO/VSO.psd1`.
+Both methods install the same module from PowerShell Gallery. The [1.0.2 release](https://github.com/saturnus25/VSO-PowerShell-Module/releases/tag/v1.0.2) records the exact package, acceptance results and Gallery publication status.
 
-## Commands
-
-| Command | Purpose |
-|---|---|
-| `Install-VSO` | Download, verify and install an official application release |
-| `Start-VSO` | Start its official launcher |
-| `Stop-VSO` | Inspect running VSO; termination requires explicit `-Force` |
-| `Update-VSO` | Update with integrity checks and previous-copy retention |
-| `Get-VSOStatus` | Read installation, integrity and process status |
-| `Get-VSOInstallation` | Discover registered installations |
-| `Reset-VSO` | Remove attributable application files |
-| `Help-VSO` | Show localized command help |
+### Custom installation
 
 ```powershell
+# Install VSO to a custom directory
 Install-VSO -Path "D:\VSO"
+
+# Install VSO for all users
 Install-VSO -AllUsers
-Start-VSO
-Stop-VSO
-Update-VSO
-Get-VSOStatus
-Get-VSOInstallation
-Help-VSO
-Get-Help Reset-VSO -Full
-Reset-VSO -WhatIf
 ```
 
-CurrentUser is the default and uses `$env:LOCALAPPDATA\Programs\VSO`. AllUsers uses `$env:ProgramFiles\VSO` and requests UAC when necessary. An explicit `Path` selects a custom managed folder; the official payload remains in its `VSO7` child. Native choices and folder selection are interactive. `-Quiet` suppresses prompts and elevation; unresolved choices or permissions produce errors. English and Spanish messages and help are included; `-Language en` or `-Language es` overrides automatic selection. Mutating commands support `-WhatIf` and `-Confirm`.
+By default, the installation wizard allows you to select the installation scope and destination.
 
-`Reset-VSO` preserves unknown or modified data. `-Full` also considers provably owned declared data; backups additionally require `-RemoveBackups -AcknowledgeBackupLoss`. Shared VSO Recovery and untracked files remain protected. Removing the application never restores Windows tweaks, and does not uninstall the PowerShell module. See [usage](docs/Usage.md) and [removal](docs/Removal.md) for details.
+| Scope | Default location |
+|---|---|
+| CurrentUser | `%LOCALAPPDATA%\Programs\VSO` |
+| AllUsers | `%ProgramFiles%\VSO` |
 
-`Get-VSOStatus` returns a structured `NotInstalled` query summary when nothing matches. Its default display follows `Language`; raw properties remain stable English tokens, nulls and Booleans. `Get-VSOInstallation` enumerates actual candidates and returns an empty collection when none match. Both accept paths or objects with a `Path` property through the pipeline.
+AllUsers installation requests UAC elevation when required. Custom installation paths are supported, including native Windows folder selection.
 
-## Uninstallation
+The official VSO7 payload is stored inside a `VSO7` subdirectory of the selected installation folder.
 
-The application and the PowerShell module are independent components:
+## Available commands
+
+| Command | Description |
+|---|---|
+| `Install-VSO` | Download, verify and install an official VSO release |
+| `Start-VSO` | Launch the installed application |
+| `Stop-VSO` | Inspect running VSO processes and optionally terminate them |
+| `Update-VSO` | Update VSO while preserving supported data and backups |
+| `Get-VSOStatus` | Display installation, integrity and process status |
+| `Get-VSOInstallation` | Discover registered VSO installations |
+| `Reset-VSO` | Safely remove VSO application files and attributable data |
+| `Help-VSO` | Display localized module help and usage examples |
+
+### Quick usage
 
 ```powershell
-Reset-VSO                 # Remove the application, preserving protected data
-Reset-VSO -Full            # Also consider additional attributable application data
-Uninstall-PSResource VSO   # Remove the module installed with PSResourceGet
-# Or, for a module installed with PowerShellGet:
+# Launch VSO
+Start-VSO
+
+# Check installation status
+Get-VSOStatus
+
+# Update VSO
+Update-VSO
+
+# View installed versions and locations
+Get-VSOInstallation
+
+# Display all available commands
+Help-VSO
+
+# Detailed help for a specific command
+Get-Help Install-VSO -Full
+```
+
+`Get-VSOStatus` returns a structured `NotInstalled` query summary when no installations match. Its display is localized; raw properties retain stable English state tokens, nulls and Booleans. `Get-VSOInstallation` returns an empty collection when no candidates match. Both query commands accept pipeline paths or objects with a `Path` property. See the [usage guide](docs/Usage.md) for filtering and automation.
+
+To terminate VSO processes, `Stop-VSO` requires explicit `-Force`. It validates process identity to avoid terminating unrelated PowerShell or CMD processes.
+
+### Uninstalling VSO
+
+There are two separate components: **the VSO application** and **the PowerShell management module**.
+
+**1. Remove the VSO application**
+
+```powershell
+Reset-VSO
+```
+
+For deeper cleanup of safely attributable application data:
+
+```powershell
+Reset-VSO -Full
+```
+
+To preview removal without changing anything:
+
+```powershell
+Reset-VSO -Full -WhatIf
+```
+
+Removing backups requires additional explicit acknowledgement:
+
+```powershell
+Reset-VSO -Full -RemoveBackups -AcknowledgeBackupLoss
+```
+
+**2. Uninstall the PowerShell module**
+
+If installed with PSResourceGet:
+
+```powershell
+Uninstall-PSResource VSO
+```
+
+If installed with PowerShellGet:
+
+```powershell
 Uninstall-Module VSO
 ```
 
-Choose the applicable command. `Reset-VSO` keeps the module; uninstalling the module keeps the application. Close sessions importing the module before removing it. Use `Help-VSO`, `Help-VSO -Command Reset-VSO`, or `Get-Help Reset-VSO -Examples` to review syntax and removal limits. Native `Get-Help -Full` places examples after NOTES; numbered example headings distinguish them from the preceding notes.
+`Reset-VSO` keeps the PowerShell module. Close sessions that have imported the module before removing it.
+
+**Important:** Removing the PowerShell module does not automatically uninstall the VSO application. Run `Reset-VSO` first if you also want to remove the application.
+
+Likewise, removing VSO does not revert Windows optimizations previously applied by the application. Shared Recovery, modified files and data of uncertain ownership remain protected.
+
+See [Removal Documentation](docs/Removal.md) for details.
+
+---
+
+## Features
+
+- **Official release integration:** Dynamically discovers VSO releases from GitHub.
+- **Integrity verification:** Validates downloaded packages and expected files.
+- **Interactive installation:** Native PowerShell choices and Windows folder selection.
+- **Flexible installation:** CurrentUser, AllUsers and custom paths.
+- **Safe updates:** Staged installation, integrity checks and previous-copy retention.
+- **Controlled removal:** Ownership-aware cleanup designed to protect unrelated files.
+- **Native progress reporting:** PowerShell progress bars for measurable operations.
+- **Localization:** English and Spanish messages and help.
+- **Automation support:** Non-interactive execution, structured results and compatible parameters.
+- **No telemetry:** The module does not collect or transmit usage analytics.
+
+Mutating commands support `-WhatIf` and `-Confirm`.
+
+Use `-Quiet` where supported to suppress interactive prompts. Operations requiring unresolved decisions or unavailable permissions return errors rather than proceeding unsafely.
+
+Language selection can be overridden using `-Language en` or `-Language es`.
 
 ## Requirements and compatibility
 
-Windows 11 x64, a 64-bit Windows PowerShell 5.1 or PowerShell 7 session, and network access to the official GitHub releases for installation and updates. The existing platform guard excludes Windows 10, Windows Server and ARM64. Six official VSO7 releases, 1.0.0 through 1.2.2, have isolated Windows acceptance evidence. VSO8 has no execution adapter and is not supported by this release.
+| Component | Requirement |
+|---|---|
+| Operating system | Windows 11 x64 |
+| PowerShell | 64-bit Windows PowerShell 5.1 or PowerShell 7.x |
+| Connectivity | Internet access for installation and updates |
+| Application support | Official VSO7 releases |
+| Permissions | Administrator privileges only when required |
 
-The module does not apply tweaks, change stored execution policies or send telemetry. The official application and pinned UAC helper use process-scoped execution-policy arguments. Starting VSO delegates to its own launcher and safety gates. See [architecture](docs/Architecture.md), [security](docs/Security.md), [privacy](docs/Privacy.md) and [distribution contracts](docs/Distribution.md).
+The existing platform guard excludes Windows 10, Windows Server and ARM64.
 
-## License
+Six official VSO7 releases, from `1.0.0` through `1.2.2`, have isolated Windows acceptance evidence.
 
-The module uses the [VSO PowerShell Module Source-Available License 1.0](LICENSE). It is free to view, study, install and run for personal or professional use. Exact unmodified copies may be shared with attribution. General modification, modified redistribution, derivative projects and rebranding require separate permission, subject to platform and legal exceptions in the license. This is **source available**, not OSI-approved open source. [License rationale](docs/License-Rationale.md) explains the platform exceptions.
+**VSO8 is not yet supported.** Its execution adapter will be implemented and validated separately.
 
-The separate [Vico Safe Optimizer application](https://github.com/saturnus25/VSO) retains its own MIT license; its third-party components retain their respective licenses. The module license does not replace them.
+## Security and safety
+
+The module is designed to manage VSO installations without applying Windows tweaks itself.
+
+Security measures include:
+
+- Download and file-integrity verification.
+- Protected extraction and controlled installation paths.
+- Process identity verification before termination.
+- Installation transaction and rollback safeguards.
+- Preservation of unknown, modified or shared data.
+- Explicit acknowledgement for destructive backup removal.
+- Process-scoped execution-policy arguments when required by the official launcher and elevation helper.
+
+The module does not modify stored PowerShell execution policies or disable Windows security features.
+
+Additional technical information is available in the [Security](docs/Security.md), [Architecture](docs/Architecture.md) and [Distribution Contracts](docs/Distribution.md) documentation.
+
+## Documentation
+
+| Document | Contents |
+|---|---|
+| [Usage Guide](docs/Usage.md) | Commands, parameters and examples |
+| [Removal Guide](docs/Removal.md) | Safe uninstallation and backup handling |
+| [Architecture](docs/Architecture.md) | Module structure and implementation |
+| [Security](docs/Security.md) | Security model and safeguards |
+| [Privacy](docs/Privacy.md) | Privacy and data handling |
+| [Distribution Contracts](docs/Distribution.md) | Release formats and compatibility |
+| [Validation](VALIDATION.md) | Tested environments and known limitations |
+| [Publishing](docs/Publishing.md) | Build, validation and publishing procedures |
+
+You can also access command documentation directly from PowerShell:
+
+```powershell
+Help-VSO
+Help-VSO -Command Install-VSO
+Get-Help Reset-VSO -Full
+```
+
+Native `Get-Help -Examples` selects the structured examples. `Get-Help -Full` places them after NOTES without a general examples heading; numbered EXAMPLE/EJEMPLO titles distinguish them. `Help-VSO -Command Reset-VSO -Examples` offers explicit language selection.
 
 ## Development
 
-Read [AGENTS.md](AGENTS.md). Runtime testing and system-changing operations belong in an authorized disposable VM. Static checks: `build/Test-Static.ps1` and `build/Test-Privacy.ps1`. Build, validation, exact-package approval and publication are separate steps; see [publishing](docs/Publishing.md). Build tools and tests are excluded from the runtime package.
+The module follows a modular architecture with separate public commands, private utilities, localized resources and automated tests.
+
+Development instructions are available in [AGENTS.md](AGENTS.md).
+
+Static validation:
+
+```powershell
+.\build\Test-Static.ps1
+.\build\Test-Privacy.ps1
+```
+
+Building the module from source:
+
+```powershell
+.\build\Build.ps1 -Package
+Import-Module .\dist\VSO\VSO.psd1
+```
+
+Runtime testing and system-changing operations must be performed in an authorized, isolated and disposable test environment.
+
+Build, validation, package approval and publication are independent stages. Development tools and tests are excluded from the distributed runtime package.
+
+## License
+
+VSO PowerShell Module is distributed under the [VSO PowerShell Module Source-Available License 1.0](LICENSE).
+
+The license permits viewing, studying, installing and running the module for personal or professional use. Exact, unmodified copies may be shared with attribution.
+
+General modification, redistribution of modified versions, derivative projects and rebranding require separate permission, subject to the exceptions stated in the license.
+
+**This project is source available, not OSI-approved open source.**
+
+See the [License Rationale](docs/License-Rationale.md) for further information.
+
+The separate [Vico Safe Optimizer](https://github.com/saturnus25/VSO) application retains its MIT license. Third-party components remain subject to their respective licenses.
 
 ## AI Development Notice
 
-The VSO PowerShell Module was developed with substantial assistance from artificial intelligence, including code generation, debugging, testing, and documentation. Project direction, release decisions, and maintenance are overseen by saturnus25.
+This project was developed with substantial assistance from artificial intelligence, including code generation, debugging, testing and documentation.
+
+Project direction, release decisions and ongoing maintenance are overseen by **saturnus25**.
+
+---
+
+Maintained by **saturnus25** · [Vico Safe Optimizer](https://github.com/saturnus25/VSO) · [PowerShell Gallery](https://www.powershellgallery.com/packages/VSO)
