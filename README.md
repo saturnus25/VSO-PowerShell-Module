@@ -2,13 +2,14 @@
 
 **The official PowerShell installation and lifecycle manager for [Vico Safe Optimizer](https://github.com/saturnus25/VSO).**
 
-[PowerShell Gallery](https://www.powershellgallery.com/packages/VSO) · [Main Project](https://github.com/saturnus25/VSO) · [Documentation](docs/Usage.md) · [License](LICENSE)
+[![Latest module release](https://img.shields.io/github/v/release/saturnus25/VSO-PowerShell-Module?style=for-the-badge&logo=github&color=287a99)](https://github.com/saturnus25/VSO-PowerShell-Module/releases/latest)
+
+[Install](#installation) · [Commands](#available-commands) · [Usage guide](docs/Usage.md) · [PowerShell Gallery](https://www.powershellgallery.com/packages/VSO) · [VSO application](https://github.com/saturnus25/VSO) · [Ideas](https://github.com/saturnus25/VSO-PowerShell-Module/discussions/categories/ideas)
 
 VSO PowerShell Module provides a simple, secure and automated way to install, launch, update and remove Vico Safe Optimizer directly from PowerShell.
 
 The module is maintained by **saturnus25** and distributed independently of the application. It downloads and verifies official GitHub release assets rather than bundling the optimizer.
 
-**Current module version:** `1.0.2`
 
 > Module versions and Vico Safe Optimizer application versions are maintained independently.
 
@@ -34,7 +35,7 @@ Install-Module VSO
 Install-VSO
 ```
 
-Both methods install the same module from PowerShell Gallery. The [1.0.2 release](https://github.com/saturnus25/VSO-PowerShell-Module/releases/tag/v1.0.2) records the exact package, acceptance results and Gallery publication status.
+Both methods install the same module from PowerShell Gallery. The [latest module release](https://github.com/saturnus25/VSO-PowerShell-Module/releases/latest) has the package details.
 
 ### Custom installation
 
