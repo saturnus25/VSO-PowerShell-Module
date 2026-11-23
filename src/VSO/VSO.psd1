@@ -1,6 +1,6 @@
 ﻿@{
     RootModule = 'VSO.psm1'
-    ModuleVersion = '1.0.2'
+    ModuleVersion = '1.0.3'
     GUID = '97ce321c-99d7-4797-b4a8-c7dc982537fc'
     Author = 'saturnus25'
     CompanyName = 'saturnus25'
@@ -16,9 +16,9 @@
     PrivateData = @{
         PSData = @{
             Tags = @('Windows','VSO','Installer','Management')
-            LicenseUri = 'https://github.com/saturnus25/VSO-PowerShell-Module/blob/v1.0.2/LICENSE'
+            LicenseUri = 'https://github.com/saturnus25/VSO-PowerShell-Module/blob/v1.0.3/LICENSE'
             ProjectUri = 'https://github.com/saturnus25/VSO-PowerShell-Module'
-            ReleaseNotes = 'Structured NotInstalled status with localized native formatting, pipeline discovery, clearer numbered native help examples, complete parameter metadata and separate application/module removal guidance. See validation for exact-package acceptance.'
+            ReleaseNotes = 'Install and update VSO7 releases that include the optional Windows Console Host compatibility launcher. Keep older ZIPs supported and preserve a conflicting local copy. See validation for exact-package acceptance.'
             RequireLicenseAcceptance = $false
         }
     }

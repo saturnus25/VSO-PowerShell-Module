@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.3
+
+- Accept and track the optional VSO7 compatibility launcher in official installation and update ZIPs.
+- During an update, adopt a manually copied compatibility launcher if its SHA-256 matches the verified release file. A conflicting copy stops the update and is preserved.
+- Accept older VSO7 release ZIPs that omit the compatibility launcher.
+
 ## 1.0.2
 
 - Return an explicit structured NotInstalled query summary from Get-VSOStatus when no installations match. Keep raw states, nulls and Boolean activity separate from localized native formatting, including unknown visibility and filtered-query wording.

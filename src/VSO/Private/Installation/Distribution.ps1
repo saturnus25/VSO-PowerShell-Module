@@ -2,6 +2,10 @@
     return @('START VSO7.bat','VSO7.ps1','VSO7_7.0.0_RC_R80.ps1','Tools/VSO7_STARTUP_GATE.ps1','Resources/VSO7_APP_CATALOG.json','Resources/VSO7_FEATURE_CATALOG.json','Resources/VSO7_NATIVE_TWEAKS.json','Resources/VSO7_SANITY_FIXTURES.json','Resources/VSO7_TWEAK_RESEARCH.json','LICENSE.Win11Debloat.txt','README.md','THIRD_PARTY_NOTICES.md','UNBLOCK VSO7.bat')
 }
 
+function Get-VSO7CompatibilityLauncherPath {
+    return 'START-VSO7-Compatibility-Mode.bat'
+}
+
 function Get-VSOContractFiles {
     param($Definition, $Context)
     $schema=Get-VSOProperty $Definition schemaVersion 0
@@ -26,13 +30,15 @@ function Get-VSOContractFiles {
     if ($schema -eq 1) { return $inventory }
     if ($Definition.packageType -cne 'PortableZip') { Throw-VSOError $Context Layout @('package type') }
     $core=@((Get-VSO7RequiredFiles)+@('LICENSE','LICENSE.txt'))
+    $compatibilityLauncher=Get-VSO7CompatibilityLauncherPath
     foreach ($group in @('requiredFiles','optionalFiles')) {
         foreach ($entry in @($Definition.$group)) {
             if (@(Compare-Object @('path','role') @($entry.PSObject.Properties.Name)).Count) { Throw-VSOError $Context Layout @('inventory fields') }
             $path=[string]$entry.path; $role=[string]$entry.role
-            # This adapter can extend data, never discover executable launchers from a ZIP.
+            # A manifest cannot grant executable support beyond the adapter's known paths.
             $data=$path -cmatch '^(Resources|Docs|Config|Cache|Logs|Temp|Recuperacion)/[A-Za-z0-9_/-]+\.(json|txt|md|xml|csv|ini|dat)$'
-            if ($path -cnotin $core -and -not $data) { Throw-VSOError $Context Layout @('unsupported additional file: '+$path) }
+            if ($path -cnotin $core -and $path -cne $compatibilityLauncher -and -not $data) { Throw-VSOError $Context Layout @('unsupported additional file: '+$path) }
+            if ($path -ceq $compatibilityLauncher -and ($role -cne 'Application' -or $group -cne 'optionalFiles')) { Throw-VSOError $Context Layout @('compatibility launcher must be optional application content') }
             if ($path -match '(^|/)\.{1,2}(/|$)' -or $inventory.Contains($path) -or $role -cnotin @('Application','Configuration','Cache','Log','Temporary','Recovery')) { Throw-VSOError $Context Layout @('inventory identity or role') }
             if ($path -cin $core -and ($role -cne 'Application' -or $group -cne 'requiredFiles')) { Throw-VSOError $Context Layout @('required adapter file') }
             if ($path -clike 'Recuperacion/*' -and $role -cne 'Recovery') { Throw-VSOError $Context Layout @('Recovery ownership') }
@@ -69,6 +75,8 @@ function Get-VSODistribution {
     if ($definition -and $definition.schemaVersion -eq 2) {
         $allowed+=@($inventory.Keys)
         foreach ($relative in $inventory.Keys) { if ($inventory[$relative].Required -and -not $files.Contains($relative)) { Throw-VSOError $Context Integrity @($relative) } }
+    } else {
+        $allowed+=Get-VSO7CompatibilityLauncherPath
     }
     # Additional data must be explicitly declared by the versioned contract.
     foreach ($relative in $files.Keys) { if ($relative -cnotin $allowed) { Throw-VSOError $Context Layout @($relative) } }

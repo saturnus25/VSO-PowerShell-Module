@@ -1,6 +1,6 @@
 ﻿# Synthetic filesystem fixtures only. Never copy an application engine into tests.
 function New-LabDistribution {
-    param([string]$Root,[string]$Version='1.2.2',[switch]$Contract2)
+    param([string]$Root,[string]$Version='1.2.2',[switch]$Contract2,[switch]$CompatibilityLauncher)
     [void][IO.Directory]::CreateDirectory($Root)
     $files=@((Get-VSO7RequiredFiles)+@('LICENSE'))
     $lines=@()
@@ -12,6 +12,12 @@ function New-LabDistribution {
         [IO.File]::WriteAllText($path,$content,[Text.UTF8Encoding]::new($false))
         $lines+=((Get-VSOHash $path)+'  '+$relative)
     }
+    $launcher=Get-VSO7CompatibilityLauncherPath
+    if ($CompatibilityLauncher) {
+        $path=Join-Path $Root $launcher
+        [IO.File]::WriteAllText($path,'Synthetic compatibility launcher fixture')
+        $lines+=((Get-VSOHash $path)+'  '+$launcher)
+    }
     [IO.File]::WriteAllLines((Join-Path $Root 'SHA256SUMS.txt'),$lines,[Text.UTF8Encoding]::new($false))
     if ($Contract2) {
         $required=@($files|ForEach-Object {[ordered]@{path=$_;role='Application'}})
@@ -20,6 +26,7 @@ function New-LabDistribution {
             $required+=[ordered]@{path=$pair[0];role=$pair[1]}
         }
         $definition=[ordered]@{schemaVersion=2;product='VicoSafeOptimizer';generation='7';version=$Version;platform='windows-x64';packageType='PortableZip';adapter='vso7-classic-v1';launcher='START VSO7.bat';launcherType='Batch';requirements=@{host='WindowsPowerShell';minimumVersion='5.1';architecture='x64'};filesManifest='SHA256SUMS.txt';requiredFiles=$required;optionalFiles=@([ordered]@{path='Resources/next.json';role='Application'});persistentData=@();update=@{compatibleGenerations=@('7');preserveUnknownFiles=$true};uninstall=@{restoreWindowsTweaks=$false;preserveUnknownFiles=$true}}
+        if ($CompatibilityLauncher) { $definition.optionalFiles+=[ordered]@{path=$launcher;role='Application'} }
         [IO.File]::WriteAllText((Join-Path $Root 'Resources/next.json'),'Synthetic optional data')
         [IO.File]::WriteAllText((Join-Path $Root 'vso-distribution.json'),($definition|ConvertTo-Json -Depth 8))
         Set-LabChecksums $Root
@@ -33,10 +40,10 @@ function Set-LabChecksums {
 }
 
 function New-LabRelease {
-    param([string]$Root,[string]$Version='1.2.2',[switch]$Contract2)
+    param([string]$Root,[string]$Version='1.2.2',[switch]$Contract2,[switch]$CompatibilityLauncher)
     Add-Type -AssemblyName System.IO.Compression.FileSystem
     $payload=Join-Path $Root ('payload-'+[guid]::NewGuid().ToString('N'))
-    New-LabDistribution (Join-Path $payload 'VSO7') $Version -Contract2:$Contract2
+    New-LabDistribution (Join-Path $payload 'VSO7') $Version -Contract2:$Contract2 -CompatibilityLauncher:$CompatibilityLauncher
     $archive=Join-Path $Root ([guid]::NewGuid().ToString('N')+'.zip')
     [IO.Compression.ZipFile]::CreateFromDirectory($payload,$archive)
     return [pscustomobject]@{ Version=$Version; Tag=('v'+$Version); ReleaseUri=('https://github.com/saturnus25/VSO/releases/tag/v'+$Version); AssetName='fixture.zip'; AssetUri=('https://github.com/saturnus25/VSO/releases/download/v'+$Version+'/fixture.zip'); Size=([IO.FileInfo]::new($archive)).Length; Sha256=(Get-VSOHash $archive); IntegrityMethod='SyntheticFixture'; Prerelease=$false; Fixture=$archive }

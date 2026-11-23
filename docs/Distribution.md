@@ -48,7 +48,7 @@ Trust hierarchy: signed/authenticated manifests would outrank hashes but are not
 
 ## Implemented schema 2 extension
 
-Schema 1 and the six historical packages without a distribution manifest retain their original inventory. Schema 2 adds `packageType: PortableZip`, `requiredFiles` and `optionalFiles`; each inventory record has exactly `path` and `role`. The implemented adapter still requires its known core, gate, catalogs and official launcher. New executable layouts require a reviewed adapter.
+Existing packages remain valid without the compatibility launcher. The VSO7 adapter accepts the exact optional filename `START-VSO7-Compatibility-Mode.bat` at the application root. The launcher is checked and tracked like other application files. Schema 2 packages that ship it declare it as optional `Application` content. Schema 2 adds `packageType: PortableZip`, `requiredFiles` and `optionalFiles`; each inventory record has exactly `path` and `role`. The implemented adapter still requires its known core, gate, catalogs and primary launcher. New executable layouts require a reviewed adapter.
 
 Additional data is accepted only below Resources, Docs, Config, Cache, Logs, Temp or Recuperacion, with simple relative names and json/txt/md/xml/csv/ini/dat extensions. Every present file must be declared and checksummed; required files must exist, optional files may be absent. The manifest itself must be checksummed, and official archive provenance/digest checks remain mandatory before installation. Unlisted files and invented launchers are rejected even with fresh checksums.
 

@@ -77,6 +77,30 @@ InModuleScope VSO {
             $p=Join-Path $root 'SHA256SUMS.txt'; $text=[IO.File]::ReadAllText($p).Replace('  ',' *'); [IO.File]::WriteAllText($p,$text)
             (Get-VSODistribution $root $script:ctx -Package).Layout|Should -Be 'vso7-classic-v1'
         }
+        It 'accepts only the known checksummed compatibility launcher as optional executable content' {
+            $root=Join-Path $TestDrive 'compatibility'
+            New-LabDistribution $root -CompatibilityLauncher
+            $launcher=Get-VSO7CompatibilityLauncherPath
+            (Get-VSODistribution $root $script:ctx -Package).Files.Keys|Should -Contain $launcher
+            [IO.File]::AppendAllText((Join-Path $root $launcher),' changed')
+            {Get-VSODistribution $root $script:ctx -Package}|Should -Throw
+            [IO.File]::WriteAllText((Join-Path $root 'other.bat'),'Synthetic executable')
+            Set-LabChecksums $root
+            {Get-VSODistribution $root $script:ctx -Package}|Should -Throw
+        }
+        It 'accepts the known launcher as optional Application content in schema 2' {
+            $root=Join-Path $TestDrive 'compatibility-schema2'
+            New-LabDistribution $root -Contract2 -CompatibilityLauncher
+            $launcher=Get-VSO7CompatibilityLauncherPath
+            $distribution=Get-VSODistribution $root $script:ctx -Package
+            $distribution.Files.Keys|Should -Contain $launcher
+            $path=Join-Path $root 'vso-distribution.json'
+            $contract=$distribution.Contract
+            ($contract.optionalFiles|Where-Object path -CEQ $launcher).role='Configuration'
+            [IO.File]::WriteAllText($path,($contract|ConvertTo-Json -Depth 8))
+            Set-LabChecksums $root
+            {Get-VSODistribution $root $script:ctx -Package}|Should -Throw
+        }
         It 'accepts declared additional data and an absent optional file in schema 2' {
             $root=Join-Path $TestDrive 'contract2';New-LabDistribution $root -Contract2
             (Get-VSODistribution $root $script:ctx -Package).Files.Contains('Resources/next.json')|Should -BeTrue

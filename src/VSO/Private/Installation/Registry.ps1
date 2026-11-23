@@ -13,6 +13,7 @@ function ConvertTo-VSOFileMap {
         $inventory=Get-VSOContractFiles $Contract $Context
         $allowed+=@($inventory.Keys | ForEach-Object { 'VSO7/'+$_ })
     }
+    if (-not $Contract -or $Contract.schemaVersion -eq 1) { $allowed+='VSO7/'+(Get-VSO7CompatibilityLauncherPath) }
     foreach ($entry in @($Records)) {
         $relative=[string](Get-VSOProperty $entry Path ''); $hash=[string](Get-VSOProperty $entry Sha256 '')
         if ($relative -cnotin $allowed -or $hash -notmatch '^[a-f0-9]{64}$' -or $map.Contains($relative)) { Throw-VSOError $Context Metadata @('file ownership') }

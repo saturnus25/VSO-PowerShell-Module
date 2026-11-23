@@ -73,6 +73,37 @@ InModuleScope VSO {
             Test-Path -LiteralPath (Join-Path $script:target 'VSO7/Recuperacion/backup.json')|Should -BeTrue
             Test-Path -LiteralPath (Join-Path $result.BackupPath 'VSO7/VSO7.ps1')|Should -BeTrue
         }
+        It 'upgrades an old receipt and owns the new compatibility launcher' -TestCases @(
+            @{Preexisting=$false},@{Preexisting=$true}
+        ) {
+            param($Preexisting)
+            $null=Invoke-VSOInstallTransaction $script:options $script:release $script:ctx
+            $relative='VSO7/'+(Get-VSO7CompatibilityLauncherPath)
+            $path=Join-Path $script:target $relative
+            if ($Preexisting) {
+                $manual=Join-Path $script:caseRoot 'manual'
+                New-LabDistribution $manual -CompatibilityLauncher
+                [IO.File]::Copy((Join-Path $manual (Get-VSO7CompatibilityLauncherPath)),$path)
+            }
+            $script:release=New-LabRelease $script:caseRoot '1.2.4' -CompatibilityLauncher
+            $result=Invoke-VSOInstallTransaction $script:options $script:release $script:ctx -Update
+            $result.Version|Should -Be '1.2.4'
+            $receipt=Read-VSOReceipt $script:target $script:ctx
+            $owned=@($receipt.Files|Where-Object Path -CEQ $relative)
+            $owned.Count|Should -Be 1
+            $owned[0].Sha256|Should -Be (Get-VSOHash $path)
+            {Test-VSOInstalledFiles $receipt $script:ctx}|Should -Not -Throw
+            if ($Preexisting) { (Get-VSOHash (Join-Path $result.BackupPath $relative))|Should -Be $owned[0].Sha256 }
+        }
+        It 'preserves a differing manually copied compatibility launcher and refuses the update' {
+            $null=Invoke-VSOInstallTransaction $script:options $script:release $script:ctx
+            $path=Join-Path $script:target ('VSO7/'+(Get-VSO7CompatibilityLauncherPath))
+            [IO.File]::WriteAllText($path,'Modified user copy')
+            $script:release=New-LabRelease $script:caseRoot '1.2.4' -CompatibilityLauncher
+            {Invoke-VSOInstallTransaction $script:options $script:release $script:ctx -Update}|Should -Throw
+            [IO.File]::ReadAllText($path)|Should -BeExactly 'Modified user copy'
+            (Read-VSOReceipt $script:target $script:ctx).Version|Should -Be '1.2.2'
+        }
         It 'restores the previous directory if registration fails after promotion' {
             $null=Invoke-VSOInstallTransaction $script:options $script:release $script:ctx
             $before=Get-VSOHash (Join-Path $script:target 'VSO7/VSO7.ps1')

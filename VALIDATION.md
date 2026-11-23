@@ -1,4 +1,8 @@
-# Validation — VSO 1.0.2
+# Validation — VSO 1.0.3
+
+The 1.0.3 change makes the VSO7 compatibility launcher an optional, checksummed application file and adds upgrade cases for absent, identical and conflicting manually copied launchers. This candidate requires its own Desktop and Core acceptance matrix and exact-package approval before publication.
+
+## Historical validation for VSO 1.0.2
 
 This release changes query UX and generated help. It preserves the installation, update, launcher, termination and removal implementations, existing ShouldProcess boundaries, transaction/receipt ownership, shared Recovery protection and source-available license. Registration, default-folder and explicit-path probing preserve access errors instead of interpreting them as absence. Published versions 1.0.0 and 1.0.1 remain immutable.
 

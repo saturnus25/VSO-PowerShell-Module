@@ -97,10 +97,18 @@ function Invoke-VSOInstallTransaction {
                     $oldFiles[$relative]=$distributionFiles[$relative]
                 }
             }
+            $compatibilityLauncher='VSO7/'+(Get-VSO7CompatibilityLauncherPath)
             foreach ($file in $contents) {
                 $relative=$file.FullName.Substring($target.Length+1).Replace('\','/')
                 if ($relative -eq '.vso-manager.json' -or $oldFiles.Contains($relative)) { continue }
-                if ($distributionFiles.Contains($relative)) { Throw-VSOError $Context Destination @($relative) }
+                if ($distributionFiles.Contains($relative)) {
+                    # Earlier releases distributed this launcher separately. Adopt only the exact
+                    # official bytes already validated in staging and retain the previous tree.
+                    if (-not $old -or $relative -ine $compatibilityLauncher -or (Get-VSOHash $file.FullName) -cne $distributionFiles[$relative]) {
+                        Throw-VSOError $Context Destination @($relative)
+                    }
+                    continue
+                }
                 $destination=Join-VSOChild $stage $relative $Context
                 [void][IO.Directory]::CreateDirectory([IO.Path]::GetDirectoryName($destination))
                 [IO.File]::Copy($file.FullName,$destination,$false)
